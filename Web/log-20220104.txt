@@ -1,0 +1,88 @@
+2022-01-04 18:47:55.771 +01:00 [INF] Apllication Started.
+2022-01-04 18:56:42.066 +01:00 [INF] Apllication Started.
+2022-01-04 19:02:57.702 +01:00 [INF] Apllication Started.
+2022-01-04 19:07:06.947 +01:00 [INF] Apllication Started.
+2022-01-04 19:07:22.281 +01:00 [INF] Apllication Started.
+2022-01-04 19:09:42.960 +01:00 [INF] Apllication Started.
+2022-01-04 19:10:31.518 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 19:10:49.993 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 19:10:52.441 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 19:10:54.307 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 19:10:56.360 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 19:11:10.197 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 19:11:12.060 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 19:11:12.356 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 19:11:12.857 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 19:11:53.989 +01:00 [INF] Apllication Started.
+2022-01-04 19:13:49.898 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 19:14:17.315 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 19:14:23.778 +01:00 [INF] Apllication Started.
+2022-01-04 19:14:32.430 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 19:16:12.615 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 19:16:23.098 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 21:20:30.727 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 21:21:10.574 +01:00 [INF] Apllication Started.
+2022-01-04 21:24:00.273 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 21:26:01.431 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: A task was canceled.
+2022-01-04 21:27:10.625 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 21:30:04.970 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: M. Path '', line 0, position 0.
+2022-01-04 21:32:33.773 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: A task was canceled.
+2022-01-04 21:38:08.821 +01:00 [INF] Apllication Started.
+2022-01-04 21:47:47.701 +01:00 [INF] Apllication Started.
+2022-01-04 21:59:18.051 +01:00 [INF] Apllication Started.
+2022-01-04 22:12:11.303 +01:00 [INF] Apllication Started.
+2022-01-04 22:17:51.896 +01:00 [ERR] Something went wrong.
+ Status Code: 500.
+Message: Unexpected character encountered while parsing value: S. Path '', line 0, position 0.
+2022-01-04 22:29:53.854 +01:00 [INF] Apllication Started.
+2022-01-04 23:03:41.176 +01:00 [INF] Apllication Started.
+2022-01-04 23:03:58.627 +01:00 [INF] Apllication Started.
+2022-01-04 23:08:46.612 +01:00 [INF] Apllication Started.
+2022-01-04 23:10:50.346 +01:00 [INF] Apllication Started.
+2022-01-04 23:14:07.382 +01:00 [INF] Apllication Started.
+2022-01-04 23:15:28.711 +01:00 [INF] Apllication Started.
+2022-01-04 23:16:07.760 +01:00 [INF] Apllication Started.
+2022-01-04 23:19:02.390 +01:00 [INF] Apllication Started.
+2022-01-04 23:20:02.480 +01:00 [INF] Apllication Started.
+2022-01-04 23:24:07.910 +01:00 [INF] Apllication Started.
+2022-01-04 23:26:05.467 +01:00 [INF] Apllication Started.

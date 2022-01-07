@@ -68,7 +68,9 @@ namespace Persistance.Migrations
                     Factor = table.Column<double>(type: "float", nullable: false),
                     EStatus = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    EmployeesId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    EmployeesId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Invoiced = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

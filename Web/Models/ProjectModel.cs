@@ -31,6 +31,8 @@ namespace Web.Models
         public string PaidFormat { get { return CreateFormatForCurrency(Paid); } set { } }
         public string BalanceFormat { get { return CreateFormatForCurrency(Balance); } set { } }
         public string FactorFormat { get { return CreateFormatForCurrency(Factor); } set { } }
+        public int EstTime { get; set; }
+        
 
         public string CreateFormatForCurrency(double amount)
 		{

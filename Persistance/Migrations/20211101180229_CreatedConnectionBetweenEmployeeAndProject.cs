@@ -10,7 +10,7 @@ namespace Persistance.Migrations
                 name: "EmployeeProject");
 
             migrationBuilder.CreateTable(
-                name: "ProjectEmployee",
+                name: "ProjectEmployees",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -21,15 +21,15 @@ namespace Persistance.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProjectEmployee", x => x.Id);
+                    table.PrimaryKey("PK_ProjectEmployees", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProjectEmployee_AspNetUsers_EmployeeId",
+                        name: "FK_ProjectEmployees_AspNetUsers_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ProjectEmployee_Projects_ProjectId",
+                        name: "FK_ProjectEmployees_Projects_ProjectId",
                         column: x => x.ProjectId,
                         principalTable: "Projects",
                         principalColumn: "Id",
@@ -37,20 +37,20 @@ namespace Persistance.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectEmployee_EmployeeId",
-                table: "ProjectEmployee",
+                name: "IX_ProjectEmployees_EmployeeId",
+                table: "ProjectEmployees",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectEmployee_ProjectId",
-                table: "ProjectEmployee",
+                name: "IX_ProjectEmployees_ProjectId",
+                table: "ProjectEmployees",
                 column: "ProjectId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProjectEmployee");
+                name: "ProjectEmployees");
 
             migrationBuilder.CreateTable(
                 name: "EmployeeProject",

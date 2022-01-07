@@ -76,22 +76,28 @@
                         @if (currentRole == "Admin")
                         {
                            <li class="nav-item">
-                            <a class="nav-link text-dark" href="/Admin/Index">Admin</a>
+                                <a class="nav-link text-dark" href="/Admin/Index">Admin</a>
+                            </li>
+                             <li class="nav-item">
+                            <a class="nav-link text-dark" href="/Admin/AddEmployee">Agregar empleado</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="/Admin/AddEmployee">Add Employee</a>
+                            <a class="nav-link text-dark" href="/Admin/AddProject">Agregar proyecto</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="/Admin/AddProject">Add Project</a>
+                         <li class="nav-item">
+                            <a class="nav-link text-dark" href="/Admin/GenerateReports">Informes</a>
                         </li>
                           <li class="nav-item">
-                            <a class="nav-link text-dark" href="/Admin/GenerateReports">Reports</a>
+                            <a class="nav-link text-dark" href="/Admin/Archived">Archivado</a>
+                        </li>
+                          <li class="nav-item">
+                            <a class="nav-link text-dark" href="/Admin/ActiveEmployees">Empleados</a>
                         </li>
                         }
                          @if (currentRole == "Employee")
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/Employee/Index">Dashboard</a>
+                                <a class="nav-link text-dark" href="/Employee/Index">Tablero de mandos</a>
                             </li>
                         }
                     </ul>

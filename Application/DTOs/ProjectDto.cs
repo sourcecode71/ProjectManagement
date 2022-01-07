@@ -25,6 +25,8 @@ namespace Application.DTOs
         public string Engineering { get; set; }
         public string Drawing { get; set; }
         public string Approval { get; set; }
+        
+        public int EstTime { get; set; }
         public string EmployeesNames { get; set; }
         public List<ProjectActivityDto> Activities { get; set; } = new List<ProjectActivityDto>();
         public List<EmployeeDto> Employees { get; set; }

@@ -101,6 +101,7 @@ namespace Application.Core.Projects
                         Schedule = item.Schedule,
                         DeliveryDate = item.DeliveryDate,
                         Client = item.Client,
+                        EstTime=item.EstTime,
                         Engineering = engName,
                         Drawing = drawName,
                         Approval = appName,

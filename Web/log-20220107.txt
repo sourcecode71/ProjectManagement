@@ -1,0 +1,1 @@
+2022-01-07 22:38:53.259 +01:00 [INF] Apllication Started.

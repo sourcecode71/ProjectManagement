@@ -20,5 +20,6 @@ namespace Web.Models
         public int Status { get; set; }
         public string StatusComment { get; set; }
         public bool IsAdmin { get; set; }
+
     }
 }

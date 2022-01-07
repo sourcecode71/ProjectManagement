@@ -21,6 +21,8 @@ namespace Domain
         public double Factor { get; set; }
         public string EStatus { get; set; }
         public bool Invoiced { get; set; }
+
+        public int EstTime { get; set; }
         public ProjectStatus Status { get; set; }
         public string AdminDelayedComment { get; set; }
         public string AdminModifiedComment { get; set; }

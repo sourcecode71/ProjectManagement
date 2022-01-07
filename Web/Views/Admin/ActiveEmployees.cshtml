@@ -1,6 +1,8 @@
 ﻿@{
     Layout = null;
 }
+@using Web.Models
+@model AdminPageDetails
 @{
     string currentName = "";
     string currentRole = "";
@@ -64,14 +66,13 @@
                             </li>
                         </ul>
                     }
-                <ul class="navbar-nav flex-grow-1 col-md-9">
-          
-                    @if (currentRole == "Admin")
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="/Admin/Index">Admin</a>
-                        </li>
-                        <li class="nav-item">
+                    <ul class="navbar-nav flex-grow-1 col-md-9">
+                        @if (currentRole == "Admin")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Admin/Index">Admin</a>
+                            </li>
+                             <li class="nav-item">
                             <a class="nav-link text-dark" href="/Admin/AddEmployee">Agregar empleado</a>
                         </li>
                         <li class="nav-item">
@@ -86,40 +87,57 @@
                           <li class="nav-item">
                             <a class="nav-link text-dark" href="/Admin/ActiveEmployees">Empleados</a>
                         </li>
-                    }
-                    @if (currentRole == "Employee")
+                        }
+                        @if (currentRole == "Employee")
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/Employee/Index">Dashboard</a>
                             </li>
-                              <li class="nav-item">
-                            <a class="nav-link text-dark" href="/Admin/Archived">Archived</a>
-                        </li>
                         }
-                </ul>
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
     <main style="margin-left: 2%; margin-right: 2%">
-         <div class="row">
-            <div class="col-md-12">
-                <h3>Generar informes de Excel: </h3>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>Empleados activos</h2>
             </div>
-            <div class="col-md-2" style="margin-top: 20px">
-                <label for="reportType">Seleccione un tipo de proyectos: </label>
-                <select class="form-control" id="reportType">
-                    <option value="0">Todos los proyectos</option>
-                    <option value="1">Proyectos pendientes</option>
-                    <option value="2">Proyectos retrasados</option>
-                    <option value="3">Proyectos Modificados</option>
-                    <option value="5">Proyectos completados</option>
-                    <option value="6">Proyectos facturados</option>
-                    <option value="4">Proyectos archivados</option>
-                </select>
-            </div>
+        </div>
+         <div class="row" style="margin-top: 80px">
             <div class="col-md-12">
-                <a id="generateReportHref" href="http://ec2-3-144-165-25.us-east-2.compute.amazonaws.com/api/Project/get-excel-report?projectStatus=0"> <button class="btn btn-sm btn-success" style="margin-top: 20px; margin-bottom: 50px">Generar informe</button></a>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <h3>Empleados activos</h3>
+                        <table class="table table-sm  table-bordered" style="margin-top: 20px; margin-bottom: 50px">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Lista de proyectos</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employeeTableBody">
+                                @foreach (var employee in Model.Employees)
+                                {
+                                    <tr>
+                                        <td>@employee.Name</td>
+                                        <td>@employee.Email</td>
+                                        <td>
+                                            @foreach (var project in employee.ProjectsNames)
+                                            {
+                                                @project
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
             </div>
         </div>
     </main>
