@@ -30,6 +30,34 @@
 
 <input type="hidden" id="currentEmail" value="@currentEmail" />
 <div class="text-center">
+	@{
+		String projectState="";
+		switch (Model.Project.Status)
+		{
+			case "On Time":
+				projectState = "A tiempo";
+				break;
+				case "Delayed":
+				projectState = "Demorado";
+				break;
+				case "Modified":
+				projectState = "Modificado";
+				break;
+			case "Archived":
+				projectState = "Archivado";
+				break;
+			case "Completed":
+				projectState = "Terminado";
+				break;
+			case "Invoiced":
+				projectState = "Facturado";
+				break;
+			default:
+				projectState = "A tiempo";
+				break;
+
+		}
+	}
 	@if (Model.Project.Status == "Delayed")
 	{
 			<div class="row">
@@ -46,14 +74,17 @@
 					<h1 class="display-4 text-success">@Model.Project.Name</h1>
 					<span class="badge badge-success" style="font-size: 25px; margin-top: 20px">Modificado</span>
 				</div>
-			</div>
+		</div>
 	}
+
 	else
 	{
-			<div class="row">
+
+		
+		<div class="row">
 				<div class="col-md-12">
 					<h1 class="display-4">@Model.Project.Name</h1>
-					<span class="badge badge-light" style="font-size: 25px; margin-top: 20px">@Model.Project.Status</span>
+					<span class="badge badge-light" style="font-size: 25px; margin-top: 20px">@projectState</span>
 				</div>
 			</div>
 	}
@@ -89,12 +120,31 @@
 		<label for="projectProgress" style="margin-top: 20px">Semana de trabajo:</label>
 		<input type="text" id="projectProgress" disabled value="@Model.Project.Progress" class="form-control" />
 
-		<label for="projectEstTime" style="margin-top: 20px">Est time:</label>
+		
+			@if (currentRole == "Admin")
+		{
+				<div class="row">
+					<div class="col-md-8">
+						<label for="projectEstTime" style="margin-top: 20px">Tiempo estimado:</label>
+						<input type="text" id="projectEstTime" disabled value="@Model.Project.EstTime" class="form-control" />
+					</div>
+					<div class="col-md-4">
+						<button class="btn btn-success" id="saveEstTIme" onclick="AdminPanel.changeEstTime()" style="margin-top: 50px;">Cambio</button>
+					</div>
+				</div>
+		}
+		else
+		{
+		<label for="projectEstTime" style="margin-top: 20px">Tiempo estimado:</label>
 		<input type="text" id="projectEstTime" disabled value="@Model.Project.EstTime" class="form-control" />
 
-		<label for="projectCurrTime" style="margin-top: 20px">Curr time:</label>
-		<input type="text" id="projectCurrTime" disabled value="@Model.Activities.Sum(x=>x.Duration)" class="form-control" />
+}
 
+
+
+		<label for="projectCurrTime" style="margin-top: 20px">Tiempo actual:</label>
+		<input type="text" id="projectCurrTime" disabled value="@Model.Activities.Sum(x=>x.Duration)" class="form-control" />
+		
 
 		<label for="projectBudget" style="margin-top: 20px">Presupuesto:</label>
 		<input type="text" id="projectBudget" disabled value="$@Model.Project.BudgetFormat" class="form-control" />
@@ -117,14 +167,14 @@
 				<label for="projectPaid" style="margin-top: 20px">Pagado:</label>
 				<input type="text" id="projectPaid" disabled value="$@Model.Project.PaidFormat" class="form-control" />
 		}
-		<label for="projectBalance" style="margin-top: 20px">Pop pagar:</label>
+		<label for="projectBalance" style="margin-top: 20px">Por pagar:</label>
 		<input type="text" id="projectBalance" disabled value="$@Model.Project.BalanceFormat" class="form-control" />
 
 		<label for="projectFactor" style="margin-top: 20px">Factor:</label>
 		<input type="text" id="projectFactor" disabled value="$@Model.Project.FactorFormat" class="form-control" />
 
 		<label for="projectEstatus" style="margin-top: 20px">EStatus:</label>
-		<input type="text" id="projectEstatus" disabled value="@Model.Project.Status" class="form-control" />
+		<input type="text" id="projectEstatus" disabled value="@projectState" class="form-control" />
 	</div>
 	<div class="col-md-6">
 		<label for="projectEmployees" style="margin-top: 20px">Empleados:</label>
@@ -221,7 +271,7 @@
 										<td>@project.Duration</td>
 										<td>@project.DateTime.ToShortDateString()</td>
 										<td>@project.Comment</td>
-										<td>@(project.Status == 2 ? "Delayed": project.Status == 3 ? "Modified" : "On time")</td>
+										<td>@(project.Status == 2 ? "Demorado": project.Status == 3 ? "Modificado" : "A tiempo")</td>
 										<td>@project.StatusComment</td>
 									</tr>
 						}
@@ -240,7 +290,7 @@
 
 			<div class="col-md-6">
 				<hr />
-				<label for="completeProject">Se completó el proyecto? Cierralo??</label>
+				<label for="completeProject">¿Se completó el proyecto? ¿Cierralo?</label>
 				<br />
 				<button class="btn btn-primary" id="completeProject" onclick="AdminPanel.completeProject()" style="margin-top: 10px;">Completo</button>
 			</div>

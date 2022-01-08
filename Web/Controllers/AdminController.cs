@@ -240,6 +240,11 @@ namespace Web.Controllers
             return _apiService.CallCompleteProject(project).Result;
         }
 
+       
+        public ResultModel SaveEstTime(ProjectModel project)
+        {
+            return _apiService.CallSaveEstTime(project).Result;
+        }
         public ResultModel SavePaid(ProjectModel project)
         {
             return _apiService.CallSavePaid(project).Result;

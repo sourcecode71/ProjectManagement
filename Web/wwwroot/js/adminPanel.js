@@ -453,6 +453,7 @@ AdminPanel.addNewproject = function () {
     var schedule = $("#addProjectSchedule").val();
     var budget = $("#addProjectBudget").val();
     var estatus = $("#addProjectEStatus").val();
+    var estTime = $("#addProjectEstTime").val();
 
     var project = {
         Name: name,
@@ -463,7 +464,8 @@ AdminPanel.addNewproject = function () {
         DeliveryDate: delivery,
         Schedule: schedule,
         Budget: parseFloat(budget.replaceAll("$", "").replaceAll(" ", "").replaceAll(',', '')),
-        EStatus: estatus
+        EStatus: estatus,
+        EstTime: estTime
     };
 
     $.ajax({
@@ -517,12 +519,80 @@ AdminPanel.removeLoader = function() {
     });
 }
 
+AdminPanel.changeEstTime = function () {
+    if ($('#projectEstTime').is(':disabled')) {
+        $("#projectEstTime").prop("disabled", false);
+        $("#saveEstTIme").text("Ahorrar");
+    }
+    else {
+        $("#projectEstTime").prop("disabled", true);
+        $("#saveEstTIme").text("Cambio");
+
+        AdminPanel.loading();
+
+        var estTime = $("#projectEstTime").val();
+        var selfProjectId = $("#projectId").val();
+
+        //Add validation
+
+        var project = {
+            EstTime: estTime,
+            SelfProjectId: selfProjectId
+        };
+
+        $.ajax({
+            url: '/Admin/SaveEstTime',
+            type: 'POST',
+            data: project,
+            success: functionW (result) {
+                AdminPanel.removeLoader();
+
+                if (result.isSuccess) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'El tiempo estimado cambió con éxito added successfully!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+                else {
+                    Swal.fire({
+                        position: 'top-end',
+                        title: 'Error!',
+                        text: 'Something went wrong.' + result.errorMessage,
+                        icon: 'error',
+                        confirmButtonText: 'Ok',
+                    })
+                }
+            },
+            error: function (err) {
+                AdminPanel.removeLoader();
+
+                Swal.fire({
+                    position: 'top-end',
+                    title: 'Error!',
+                    text: 'Something went wrong. Error: ' + result.errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'Ok',
+                })
+            }
+        });
+    }
+  
+    
+    
+}
+
 $("#reportType").on('change', function () {
 
     var href = AdminPanel.href + this.value;
 
     $("#generateReportHref").attr('href', href);
 });
+
+
+
 
 $(document).ready(function () {
 });

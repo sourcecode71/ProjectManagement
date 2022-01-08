@@ -280,7 +280,21 @@ namespace Web.Services
                 Result = apiResponse
             };
         }
+        public async Task<ResultModel> CallSaveEstTime(ProjectModel project)
+        {
+            string projectJson = JsonConvert.SerializeObject(project);
+            StringContent content = new StringContent(projectJson, Encoding.UTF8, "application/json");
 
+            HttpResponseMessage response = await client.PostAsync($"{ProjectEndpoint}/save-est-time", content);
+            string apiResponse = await response.Content.ReadAsStringAsync();
+
+            return new ResultModel
+            {
+                IsSuccess = response.IsSuccessStatusCode,
+                ErrorMessage = response.IsSuccessStatusCode ? string.Empty : $"Error: {apiResponse}",
+                Result = apiResponse
+            };
+        }
         public async Task<List<ActivityModel>> CallGetActivities(string currentEmail)
         {
             HttpResponseMessage response = await client.GetAsync($"{EmployeeEndpoint}/activity-by-employee?email={currentEmail}");

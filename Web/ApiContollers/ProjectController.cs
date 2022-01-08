@@ -56,7 +56,8 @@ namespace Web.ApiControllers
                 Schedule = project.Schedule,
                 Status = ProjectStatus.OnTime,
                 CreatedDate = DateTime.Now,
-                Budget = project.Budget
+                Budget = project.Budget,
+                EstTime=project.EstTime
             };
 
             return Ok(await Mediator.Send(new Create.Command { Project = projectDomain, Employees = employees }));
@@ -148,6 +149,17 @@ namespace Web.ApiControllers
                 Paid = project.Paid
             }));
         }
+
+        [HttpPost("save-est-time")]
+		public async Task<ActionResult> SaveEstTime(ProjectDto project)
+        {
+            return Ok(await Mediator.Send(new SaveEstTime.Command
+            {
+                SelfProjectId = project.SelfProjectId,
+                EstTime = project.EstTime
+            }));
+        }
+        
 
         [HttpGet("get-excel-report")]
         public FileResult ExportExcel(int projectType)

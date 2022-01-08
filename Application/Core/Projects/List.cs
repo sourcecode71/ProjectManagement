@@ -32,19 +32,19 @@ namespace Application.Core.Projects
                 switch (status)
                 {
                     case ProjectStatus.OnTime:
-                        return "On Time";
+                        return "A tiempo";
                     case ProjectStatus.Delayed:
-                        return "Delayed";
+                        return "Demorado";
                     case ProjectStatus.Modified:
-                        return "Modified";
+                        return "Modificado";
                     case ProjectStatus.Archived:
-                        return "Archived";
+                        return "Archivado";
                     case ProjectStatus.Completed:
-                        return "Completed";
+                        return "Terminado";
                     case ProjectStatus.Invoiced:
-                        return "Invoiced";
+                        return "Facturado";
                     default:
-                        return "On Time";
+                        return "A tiempo";
                 }
             }
 
