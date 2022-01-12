@@ -43,7 +43,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-               <a class="navbar-brand" style="text-align: left;width: 15%;" asp-area="" asp-controller="Home" asp-action="Index"><img src="/img/logo.png" width="100%"/> </a>
+               <a class="navbar-brand" style="text-align: left;width: 15%;" asp-area="" asp-controller="Home" asp-action="Index"><img src="/img/logo.svg" width="100%"/> </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -160,18 +160,18 @@
         </div>
         <div class="row" style="margin-top: 80px">
             <div class="col-md-12">
-                <h3>All my Activities</h3>
+                <h3>Todas mis actividades</h3>
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table table-sm  table-bordered" style="margin-top: 20px; margin-bottom: 50px">
                             <thead class="table-dark">
                                 <tr>
-                                    <th scope="col">Project</th>
-                                    <th scope="col">Duration</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Comment</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Status Comment</th>
+                                    <th scope="col">Proyecto</th>
+                                    <th scope="col">Duración</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Comentario</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Comentario de estado</th>
                                 </tr>
                             </thead>
                             <tbody id="projectTableBody">
@@ -182,7 +182,7 @@
                                         <td>@project.Duration</td>
                                         <td>@project.DateTime.ToShortDateString()</td>
                                         <td>@project.Comment</td>
-                                        <td>@(project.Status == 2 ? "Delayed": project.Status == 3 ? "Modified" : "On time")</td>
+                                        <td>@(project.Status == 2 ? "Demorado": project.Status == 3 ? "Modificado" : "A tiempo")</td>
                                         <td>@project.StatusComment</td>
                                     </tr>
                                 }

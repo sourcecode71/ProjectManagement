@@ -169,7 +169,7 @@ namespace Web.Services
 
             string apiResponse = await response.Content.ReadAsStringAsync();
 
-            List<ProjectModel> projects = JsonConvert.DeserializeObject<List<ProjectModel>>(apiResponse);
+            List<ProjectModel> projects = JsonConvert.DeserializeObject<List<ProjectModel>>(apiResponse).OrderBy(x=>x.SelfProjectId).ToList();
 
             return projects;
         }

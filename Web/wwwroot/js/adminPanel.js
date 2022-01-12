@@ -544,7 +544,7 @@ AdminPanel.changeEstTime = function () {
             url: '/Admin/SaveEstTime',
             type: 'POST',
             data: project,
-            success: functionW (result) {
+            success: function (result) {
                 AdminPanel.removeLoader();
 
                 if (result.isSuccess) {

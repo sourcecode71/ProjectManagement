@@ -26,8 +26,14 @@ namespace Web.Controllers
             }
 
             EmployeePageDetails employeePageDetails = new EmployeePageDetails();
-
-            employeePageDetails.Projects = _apiService.CallGetProjects().Result.Where(x => x.Status != "Archived").ToList();
+            EmployeeModel employee=_apiService.CallGetEmployees().Result.Where(x => x.Email == currentEmail).ToList().First();
+            
+            employeePageDetails.Projects = _apiService.CallGetProjects().Result.Where(x => (x.Status != "Archived" 
+            && ((x.EmployeesNames!=null && x.EmployeesNames.Contains(employee.Name))
+            || (x.Drawing != null && x.Drawing.Equals(employee.Name))
+            || (x.Engineering != null && x.Engineering.Equals(employee.Name))
+            || (x.Approval != null && x.Approval.Equals(employee.Name))
+            ))).ToList();
 
             if (!string.IsNullOrEmpty(currentEmail))
             {
