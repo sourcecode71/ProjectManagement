@@ -129,7 +129,7 @@
 						<input type="text" id="projectEstTime" disabled value="@Model.Project.EstTime" class="form-control" />
 					</div>
 					<div class="col-md-4">
-						<button class="btn btn-success" id="saveEstTIme" onclick="AdminPanel.changeEstTime()" style="margin-top: 50px;">Cambio</button>
+						<button class="btn btn-success" id="saveEstTIme" onclick="AdminPanel.changeEstTime()" style="margin-top: 50px;">Modificar</button>
 					</div>
 				</div>
 		}
@@ -158,7 +158,7 @@
 						<input type="text" id="projectPaid" value="$ 0.00" class="form-control" />
 					</div>
 					<div class="col-md-4">
-						<button class="btn btn-success" id="savePaidBtn" onclick="AdminPanel.savePaid()" style="margin-top: 50px;">Ahorrar</button>
+						<button class="btn btn-success" id="savePaidBtn" onclick="AdminPanel.savePaid()" style="margin-top: 50px;">Guardar</button>
 					</div>
 				</div>
 		}
@@ -188,7 +188,7 @@
 				<select id="assignEmployeesList" class="form-control" multiple>
 				@foreach (var employee in Model.AllEmployees)
 				{
-							<option value="@employee">@employee</option>
+							<option value="@employee.Email">@employee.Name</option>
 				}
 				</select>
 				<div class="row">

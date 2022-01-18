@@ -522,11 +522,11 @@ AdminPanel.removeLoader = function() {
 AdminPanel.changeEstTime = function () {
     if ($('#projectEstTime').is(':disabled')) {
         $("#projectEstTime").prop("disabled", false);
-        $("#saveEstTIme").text("Ahorrar");
+        $("#saveEstTIme").text("Guardar");
     }
     else {
         $("#projectEstTime").prop("disabled", true);
-        $("#saveEstTIme").text("Cambio");
+        $("#saveEstTIme").text("Modificar");
 
         AdminPanel.loading();
 

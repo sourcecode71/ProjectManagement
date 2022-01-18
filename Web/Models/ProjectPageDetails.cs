@@ -9,6 +9,6 @@ namespace Web.Models
     {
         public ProjectModel Project { get; set; }
         public List<ActivityModel> Activities { get; set; }
-        public List<string> AllEmployees { get; set; }
+        public List<EmployeeModel> AllEmployees { get; set; }
     }
 }

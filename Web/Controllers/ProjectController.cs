@@ -28,7 +28,7 @@ namespace Web.Controllers
 
             ProjectModel project = _apiService.CallGetProject(id).Result;
             projectPage.Project = project;
-            projectPage.AllEmployees = _apiService.CallGetEmployeesNames().Result;
+            projectPage.AllEmployees = _apiService.CallGetEmployees().Result;
             projectPage.Activities = _apiService.CallGetActivitiesForProject(id).Result;
 
             return View(projectPage);

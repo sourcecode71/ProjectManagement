@@ -3,3 +3,4 @@
  Status Code: 500.
 Message: The incoming tabular data stream (TDS) remote procedure call (RPC) protocol stream is incorrect. Parameter 14 ("@p11"): The supplied value is not a valid instance of data type float. Check the source data for invalid values. An example of an invalid value is data of numeric type with scale greater than precision.
 2022-01-13 00:23:28.996 +01:00 [INF] Apllication Started.
+2022-01-13 00:25:34.788 +01:00 [INF] Apllication Started.
