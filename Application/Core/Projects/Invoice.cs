@@ -28,7 +28,7 @@ namespace Application.Core.Projects
 
                 if (project != null)
                 {
-                    project.Status = ProjectStatus.Invoiced;
+                    project.Status = ProjectStatus.Active;
 
                     await _context.SaveChangesAsync();
                 }

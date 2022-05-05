@@ -30,18 +30,18 @@ namespace Application.Core.Projects
             {
                 switch (status)
                 {
-                    case ProjectStatus.Budgeted:
-                        return "Budget phase";
+                    //case ProjectStatus.Budgeted:
+                    //    return "Budget phase";
                     case ProjectStatus.Delayed:
                         return "Delayed";
-                    case ProjectStatus.Modified:
-                        return "Modified";
+                    //case ProjectStatus.Modified:
+                    //    return "Modified";
                     case ProjectStatus.Archived:
                         return "Archived";
                     case ProjectStatus.Completed:
                         return "Completed";
-                    case ProjectStatus.Invoiced:
-                        return "Invoiced";
+                    //case ProjectStatus.Invoiced:
+                    //    return "Invoiced";
                     default:
                         return "On Time";
                 }

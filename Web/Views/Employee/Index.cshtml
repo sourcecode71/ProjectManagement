@@ -44,22 +44,16 @@
                                                 <th> Budget No</th>
                                                 <th> Work  No </th>
                                                 <th> Name  </th>
-                                                <th> Budget </th>
-                                                <th> Paid Amount </th>
-                                            
                                             </tr>
                                             </thead>
                                                <tbody>
-                                                  <tr v-for="(wrk,index) in workOrders" :key="wrk.id">
+                                                  <tr v-for="(wrk,index) in workOrders" :key="wrk.workOrderNo">
                                                         <td>{{index+1}}</td>
                                                         <td>{{wrk.projectYear}}</td>
                                                         <td>{{wrk.projectNo }}</td>
                                                         <td>{{wrk.wrkBudgetNo }}</td>
                                                         <td>{{wrk.workOrderNo }}</td>
                                                         <td>{{wrk.consecutiveWork }}</td>
-                                                        <td>{{wrk.approvedBudget }}</td>
-                                                        <td>{{wrk.approvedBudget - wrk.balance  }}</td>
-                                                     
                                                     </tr>
                                                  </tbody>
                                           

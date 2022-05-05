@@ -28,7 +28,14 @@ namespace Web.Controllers
                     return RedirectToAction("Login", "Home");
                 }
 
-                return View();
+                if (currentRole == "Admin" || currentRole == "Management" || currentRole =="Accounting")
+                {
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Employee", "Index");
+                }
 
             }
 

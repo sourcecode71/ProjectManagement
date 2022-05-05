@@ -10,20 +10,20 @@ namespace PMG.Data.Repository.Model
         {
             switch (status)
             {
-                case ProjectStatus.Budgeted:
-                    return "Budget phase";
+                //case ProjectStatus.Budgeted:
+                //    return "Budget phase";
                 case ProjectStatus.Active:
                     return "Active";
                 case ProjectStatus.Completed:
                     return "Completed";
                 case ProjectStatus.Archived:
                     return "Archived";
-                case ProjectStatus.Invoiced:
-                    return "Invoiced";
+                //case ProjectStatus.Invoiced:
+                //    return "Invoiced";
                 case ProjectStatus.Delayed:
                     return "Delayed";
-                case ProjectStatus.Modified:
-                    return "Modified";
+                //case ProjectStatus.Modified:
+                //    return "Modified";
                 case ProjectStatus.Canceled:
                     return "Cancel";
                 default:

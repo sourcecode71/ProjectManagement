@@ -95,9 +95,6 @@
             axios.get(clientURL, config).then(
                 (result) => {
                     this.allInv = result.data;
-
-                    console.log(" all ", this.allInv);
-
                     setTimeout(() => {
                         $('#invAllLogs').DataTable({
                             "scrollY": "750px",

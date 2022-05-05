@@ -423,7 +423,7 @@ namespace PMG.Data.Repository.Projects
                         Paid = 0,
                         Name = dto.Name,
                         Progress = 0,
-                        Status = ProjectStatus.Budgeted,
+                        Status = ProjectStatus.Active,
                         CreatedDate = DateTime.Now,
                         Description = dto.Description
                     };

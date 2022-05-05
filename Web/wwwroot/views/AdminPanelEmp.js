@@ -55,20 +55,15 @@
                             "scrollCollapse": true,
                             "paging": false,
                             "columns": [
-                                { "width": "2%" },
                                 { "width": "5%" },
-                                { "width": "9%" },
-                                { "width": "11%" },
-                                { "width": "9%" },
-                                { "width": "20%" },
                                 { "width": "10%" },
-                                { "width": "10%" }
+                                { "width": "10%" },
+                                { "width": "10%" },
+                                { "width": "10%" },
+                                { "width": "55%" }
                             ]
                         });
-                    }, 100);
-
-                    console.log(" datata ", this.workOrders);
-
+                    }, 500);
                 },
                 (error) => {
                     console.error(error);
@@ -103,7 +98,7 @@
             this.AssignInfo(wrk);
             this.allInv = true;
             this.allHrs = false;
-
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         },
 
         ShowAllHRS: function (wrk) {
@@ -111,7 +106,7 @@
             this.allInv = false;
             this.allHrs = true;
             this.LoadHoursLogSummery(wrk.id);
-
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         },
 
         LoadHoursLogSummery: function (wrkId) {

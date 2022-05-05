@@ -105,6 +105,8 @@
             this.allInv = true;
             this.allHrs = false;
 
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
         },
 
         ShowAllHRS: function (wrk) {
@@ -112,6 +114,7 @@
             this.allInv = false;
             this.allHrs = true;
             this.LoadHoursLogSummery(wrk.id);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
         },
 

@@ -473,8 +473,7 @@ namespace PMG.Data.Repository.Projects
         {
             switch (status)
             {
-                case ProjectStatus.Budgeted:
-                    return "Budget phase";
+                
                 case ProjectStatus.Active:
                     return "Active";
                 case ProjectStatus.Completed:

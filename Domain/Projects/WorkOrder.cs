@@ -35,7 +35,7 @@ namespace Domain.Projects
         public string Comments { get; set; }
         [MaxLength(200)]
         public string UpdateUser { get; set; }
-        public ProjectStatus Status { get; set; } = ProjectStatus.Budgeted;
+        public ProjectStatus Status { get; set; } = ProjectStatus.Active;
         public DateTime? UpdateDate { get; set; }
         public bool IsInvoiced { get; set; }
     }

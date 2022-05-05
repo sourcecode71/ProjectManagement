@@ -32,8 +32,8 @@ namespace Application.Core.Projects
             {
                 switch (status)
                 {
-                    case ProjectStatus.Budgeted:
-                        return "Budget phase";
+                    //case ProjectStatus.Budgeted:
+                    //    return "Budget phase";
                     case ProjectStatus.Active:
                         return "Active";
                     case ProjectStatus.Completed:
@@ -102,7 +102,7 @@ namespace Application.Core.Projects
                         appName = employee.Name;
                 }
 
-                var lastModifiedActivity = project.Activities.OrderBy(x => x.DateTime).LastOrDefault(x => x.Status == ProjectStatus.Modified);
+                var lastModifiedActivity = project.Activities.OrderBy(x => x.DateTime).LastOrDefault(x => x.Status == ProjectStatus.Active);
                 var lastDelayedActivity = project.Activities.OrderBy(x => x.DateTime).LastOrDefault(x => x.Status == ProjectStatus.Delayed);
 
                 var projectDto = new ProjectDto

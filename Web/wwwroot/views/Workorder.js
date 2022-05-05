@@ -115,7 +115,26 @@
 
       axios.get(clientURL, config).then(
         (result) => {
-          this.projects = result.data;
+              this.projects = result.data;
+
+              setTimeout(() => {
+                  $("#allWorkOrder").DataTable({
+                      scrollY: "500px",
+                      scrollCollapse: true,
+                      paging: false,
+                      columns: [
+                          { "width": "3%" },
+                          { "width": "17%" },
+                          { "width": "12%" },
+                          { "width": "17%" },
+                          { "width": "9%" },
+                          { "width": "9%" },
+                          { "width": "12%" },
+                          { "width": "9%" },
+                      ]
+                  });
+
+              },100);
         },
         (error) => {
           console.error(error);
@@ -315,7 +334,7 @@
           this.showDetails = true;
           this.seen = false;
 
-
+         window.scrollTo({ top: 0, behavior: 'smooth' });
 
       },
 
@@ -323,7 +342,7 @@
           this.hrsDetails = !this.hrsDetails;
           this.loadAllWorkOrder();
           this.pageName = "Work Order";
-         
+          window.scrollTo({ top: 0, behavior: 'smooth' });
 
       },
 
@@ -375,7 +394,7 @@
 
           this.LoadHoursLogSummery(wrk.id);
           this.LoadHoursLogDetails(wrk.id);
-
+          window.scrollTo({ top: 0, behavior: 'smooth' });
       },
 
       LoadHoursLogSummery: function (wrkId) {
@@ -386,8 +405,7 @@
           axios.get(wrkURL, config).then(
               (result) => {
                   this.assignEmp = result.data;
-
-                  console.log(" Assing emp ", this.assignEmp);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
               },
               (error) => {
                   console.error(error);
@@ -417,7 +435,6 @@
                           paging: false,
                       });
                   }, 500);
-
 
 
                   //empHrsDetails

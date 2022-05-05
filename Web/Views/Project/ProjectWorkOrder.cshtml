@@ -3,7 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using Web.Models
 @model EmployeePageDetails
 @{
     string currentRole = "";
@@ -23,7 +22,11 @@
 
 <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
-
+<style>
+    .dataTables_empty{
+        display:none !important;
+    }
+</style>
 
 <link rel="stylesheet" href="~/css/projects.css" />
  <link rel="stylesheet" href="~/css/data-table.css" />
@@ -309,7 +312,7 @@
                                     <td>
                                         <button type="button" v-on:click="ShowWorkOrder(wrk)"
                                             class="btn btn-outline-info btn-sm">
-                                            <i class="metismenu-icon pe-7s-door-lock"></i> Details
+                                            Details
                                         </button>
                                     </td>
                                 </tr>
