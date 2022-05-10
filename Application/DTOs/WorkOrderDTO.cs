@@ -45,6 +45,7 @@ namespace Application.DTOs
         public string SetUser { get; set; }
         public double SpentHour { get; set; }
         public double BudgetHour { get; set; }
+        public string EmployeeId { get; set; }
         public List<ProjectEmp> Engineers { get; set; }
         public List<ProjectEmp> Drawings { get; set; }
 

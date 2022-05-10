@@ -9,6 +9,7 @@ namespace PMG.Data.Repository.Projects
     {
         Task<bool> SaveWorkOrder(WorkOrderDTO orderDTO);
         List<WorkOrderDTO> LoadAllWorkOrders();
+        List<WorkOrderDTO> LoadEmployeeWorkOrders(string EmpId);
         Task<bool> UpdateWorkOrder(WorkOrderDTO orderDTO);
         IQueryable<WorkOrderDTO> GetFilteredWorkOrder(string strOT);
         Task<bool> UpdateWorkOrderStatus(WorkOrderDTO orderDTO);

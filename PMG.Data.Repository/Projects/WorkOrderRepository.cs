@@ -78,6 +78,69 @@ namespace PMG.Data.Repository.Projects
             }
         }
 
+        public List<WorkOrderDTO> LoadEmployeeWorkOrders(string EmpId)
+        {
+            try
+            {
+                DbCommand cmd = _context.Database.GetDbConnection().CreateCommand();
+                cmd.CommandText = "dbo.Wrk_AllWorkOrder_Emp_Wise";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                var param = cmd.CreateParameter();
+                param.ParameterName = "@EmpId";
+                param.Value = new Guid(EmpId);
+                cmd.Parameters.Add(param);
+
+                List<WorkOrderDTO> wrkList = new List<WorkOrderDTO>();
+
+                _context.Database.OpenConnection();
+                using (DbDataReader rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        WorkOrderDTO wOT = new WorkOrderDTO()
+                        {
+                            Id = new Guid(rd.GetValue("id").ToString()),
+                            ProjectId = rd.GetValue("ProjectId").ToString(),
+                            ClinetName = rd.GetValue("ClientName").ToString(),
+                            ProjectName = rd.GetValue("ProjectName").ToString(),
+                            OriginalBudget = Convert.ToDouble(rd.GetValue("OriginalBudget").ToString()),
+                            ApprovedBudget = Convert.ToDouble(rd.GetValue("ApprovedBudget").ToString()),
+                            Balance = Convert.ToDouble(rd.GetValue("Balance").ToString()),
+                            BudgetHour = Convert.ToDouble(rd.GetValue("BudgetHours").ToString()),
+                            SpentHour = Convert.ToDouble(rd.GetValue("SpentHour").ToString()),
+                            ConsecutiveWork = rd.GetValue("ConsWork").ToString(),
+                            OTDescription = rd.GetValue("OTDescription").ToString(),
+                            CompanyName = rd.GetValue("CompanyName") != null ? rd.GetValue("CompanyName").ToString() : "",
+                            ClientName = rd.GetValue("ClientName") != null ? rd.GetValue("ClientName").ToString() : "",
+                            ProjectNo = rd.GetValue("ProjectNo").ToString(),
+                            ProjectYear = Convert.ToInt16(rd.GetValue("pYear").ToString()),
+                            WorkOrderNo = rd.GetValue("WorkOrderNo").ToString(),
+                            WrkBudgetNo = rd.GetValue("BudgetNo").ToString(),
+                            WrkStatus = (ProjectStatus)(Convert.ToInt16(rd.GetValue("WrkStatus").ToString())),
+                            StartDateStr = rd.GetValue("StartDate").ToString(),
+                            EndDateStr = rd.GetValue("EnDate").ToString(),
+                            ApprovedDateStr = rd.GetValue("ApprovalDate").ToString(),
+
+                        };
+
+                        wOT.WrkStatusStr = this.GetStatusString(wOT.WrkStatus);
+
+
+                        wrkList.Add(wOT);
+
+                    }
+                }
+
+                return wrkList;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
 
         public async Task<WorkOrderDTO> LoadWorkOrdersById(string wrkId)
         {

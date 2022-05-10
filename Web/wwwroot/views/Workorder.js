@@ -204,7 +204,7 @@
       LoadEmployee: function () {
       const config = { headers: { "Content-Type": "application/json" } };
       var base_url = window.location.origin;
-      const clientURL = base_url + "/api/Employee/all-active-employee";
+      const clientURL = base_url + "/api/employee/all-active-employee";
 
       axios.get(clientURL, config).then(
         (result) => {

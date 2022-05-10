@@ -25,6 +25,7 @@ namespace PMG.Data.Repository.Employee
                 var empList = await (from emp in _context.Employees
                                      join ur in _context.UserRoles on emp.Id equals ur.UserId
                                      join rl in _context.Roles on ur.RoleId equals rl.Id
+                                     orderby emp.FirstName
                                      select new EmployeeDto
                                      {
                                          Id = emp.Id,

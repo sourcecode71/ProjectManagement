@@ -34,13 +34,10 @@
         empHrs:[]
     },
     methods: {
-
-       
         loadAllWorkOrder: function () {
-
             const config = { headers: { "Content-Type": "application/json" } };
             var base_url = window.location.origin;
-            const clientURL = base_url + "/api/WorkOrder/load-work-orders/active";
+            const clientURL = base_url + "/api/workOrder/emp/load-work-orders";
 
             axios.get(clientURL, config).then(
                 (result) => {

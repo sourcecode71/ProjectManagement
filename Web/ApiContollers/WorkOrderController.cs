@@ -117,6 +117,32 @@ namespace Web.ApiContollers
             }
         }
 
+        [HttpGet("emp/load-work-orders")]
+        public ActionResult GetAllActiveWorkOrderByEmployee()
+        {
+            try
+            {
+                string userId = HttpContext.Session.GetString("current_user_id");
+
+                if (!string.IsNullOrEmpty(userId))
+                {
+                    var wrkList = _woRepository.LoadEmployeeWorkOrders(userId);
+                    var filterWrk = wrkList.Where(w => w.WrkStatus != ProjectStatus.Archived || w.WrkStatus != ProjectStatus.Canceled);
+                    return Ok(filterWrk);
+                }
+                else
+                {
+                    return Ok(null);
+                }
+              
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         [HttpGet("work-orders/by-project")]
         public async Task<ActionResult> GetWorkOrderByProject(string PrId)
         {
