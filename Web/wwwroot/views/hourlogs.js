@@ -107,8 +107,6 @@ const app = new Vue({
 
         LoadHourLogForEmpWrk: function (wrkId) {
 
-            console.log(" load work ordeer Id ", wrkId);
-
             const config = { headers: { 'Content-Type': 'application/json' } };
             var base_url = window.location.origin;
             const clientURL = base_url + "/api/Company/wrk-hour-log?wrkId=" + wrkId;

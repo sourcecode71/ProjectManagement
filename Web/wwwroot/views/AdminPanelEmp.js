@@ -55,9 +55,10 @@
                                 { "width": "5%" },
                                 { "width": "10%" },
                                 { "width": "10%" },
+                                { "width": "25%" },
+                                { "width": "40%" },
                                 { "width": "10%" },
-                                { "width": "10%" },
-                                { "width": "55%" }
+
                             ]
                         });
                     }, 500);
@@ -195,7 +196,17 @@
 
             return  dollarUS.format(Crn);
             
-        }
+        },
+
+        wrkProgress: function (wrk) {
+
+            if (wrk.budgetHour != 0) {
+                var wrkPC = 100 * (wrk.spentHour / wrk.budgetHour).toFixed(4) + "%";
+                return wrkPC;
+            } else {
+                return "0%";
+            }
+        },
   }
 
 

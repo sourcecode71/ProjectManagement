@@ -40,20 +40,20 @@
                                             <tr style="font-size:14px">
                                                 <th> # </th>
                                                 <th> Year </th>
-                                                <th> Project No</th>
-                                                <th> Budget No</th>
                                                 <th> Work  No </th>
+                                                <th> Client Name  </th>
                                                 <th> Name  </th>
+                                                <th> Progress  </th>
                                             </tr>
                                             </thead>
                                                <tbody>
                                                   <tr v-for="(wrk,index) in workOrders" :key="wrk.workOrderNo">
                                                         <td>{{index+1}}</td>
                                                         <td>{{wrk.projectYear}}</td>
-                                                        <td>{{wrk.projectNo }}</td>
-                                                        <td>{{wrk.wrkBudgetNo }}</td>
                                                         <td>{{wrk.workOrderNo }}</td>
+                                                        <td>{{wrk.clientName }}</td>
                                                         <td>{{wrk.consecutiveWork }}</td>
+                                                        <td>{{ wrkProgress(wrk) }} </td>
                                                     </tr>
                                                  </tbody>
                                           
