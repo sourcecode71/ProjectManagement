@@ -176,6 +176,8 @@
 
         },
 
+   
+
         empTotalLog: function (hrs) {
             var total_amount = 0;
             $.each(hrs, function (i, v) { total_amount += v.lhour; });

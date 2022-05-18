@@ -20,12 +20,15 @@ const app = new Vue({
         comments: '',
         hourLogDate: '',
         hrsEmp: [],
+        idForDeleted: '',
         isSeenEmp: false
     },
     methods: {
 
         SubmitHourLogs: function () {
             this.errors = [];
+
+            console.log(" submit data -- ", this.isValidFrom())
 
             if (this.isValidFrom()) {
                 const config = { headers: { 'Content-Type': 'application/json' } };
@@ -40,6 +43,8 @@ const app = new Vue({
                     remarks: this.comments,
                     spentDate: this.hourLogDate
                 };
+
+                console.log(" submit data -- ", hrsData);
 
                 axios.post(hrsUrl, hrsData, config)
                     .then(response => {
@@ -92,8 +97,6 @@ const app = new Vue({
 
             axios.get(clientURL, config).then(result => {
 
-
-
                 this.logs = result.data;
 
                 setTimeout(() => {
@@ -137,6 +140,29 @@ const app = new Vue({
         
 
         },
+        DeleteHrs: function (wrk) {
+            this.idForDeleted = wrk.id;
+            $("#deleteConfirmModel").modal("show");
+        },
+
+        DeleteHourLogConfirm: function () {
+            const config = { headers: { "Content-Type": "application/json" } };
+            var base_url = window.location.origin;
+            const wrkURL = base_url + "/api/Company/admin/delete-hour-log?Id=" + this.idForDeleted;
+
+            axios.delete(wrkURL, config).then(
+                (result) => {
+                 
+                    if (result.data == true) {
+                        $("#deleteConfirmModel").modal("hide");
+                        this.LoadHourLogForEmpWrk();
+                    }
+                   
+                },
+                (error) => {
+                    console.error(error);
+                });
+        },
         loadAllEmpoyee: function () {
             const config = { headers: { "Content-Type": "application/json" } };
             var base_url = window.location.origin;
@@ -172,7 +198,27 @@ const app = new Vue({
         },
         isValidFrom: function () {
             this.errors = [];
+            if (this.workOrderId == "0") {
+                this.errors.push("Please select a work order");
+            }
 
+            if (this.empId == "0") {
+                this.errors.push("Please select a Employee");
+            }
+
+            if (!this.hourLogDate) {
+                this.errors.push("Hour log Date is reequired");
+            }
+
+            if (!this.spentHour) {
+                this.errors.push("Spent hour is reequired");
+            }
+
+            if (!this.errors.length) {
+                return true;
+            } else {
+                return false;
+            }
           
         },
 

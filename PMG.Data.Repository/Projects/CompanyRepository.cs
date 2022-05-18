@@ -19,6 +19,7 @@ namespace PMG.Data.Repository.Projects
         Task<List<CompanyDTO>> GetAllCompany();
         Task<List<CompanyDTO>> GetAllCompany(Guid guid);
         Task<bool> SaveEmployeHourLog(HourlogsDTO dTO);
+        Task<bool> DeleteEmployeHourLog(Guid id);
         Task<List<HourlogsDTO>> GetAllHourLogs(string empId, EmployeeType empType);
         Task<List<HourlogsDTO>> GetWorkOrderHourLogs(string empId, string wrkId, EmployeeType empType);
 
@@ -189,6 +190,7 @@ namespace PMG.Data.Repository.Projects
                               where (wrk.Status != ProjectStatus.Archived)
                               select new HourlogsDTO
                               {
+                                  Id = hr.Id,
                                   EmpId = hr.EmpId,
                                   EmpName = String.Format("{0} {1}", e.FirstName, e.LastName),
                                   SpentHour = hr.SpentHour,
@@ -238,6 +240,7 @@ namespace PMG.Data.Repository.Projects
                               where (wrk.Status != ProjectStatus.Archived && wrk.Id == new Guid(wrkId))
                               select new HourlogsDTO
                               {
+                                  Id = hr.Id,
                                   EmpId = hr.EmpId,
                                   EmpName = String.Format("{0} {1}", e.FirstName, e.LastName),
                                   SpentHour = hr.SpentHour,
@@ -271,6 +274,23 @@ namespace PMG.Data.Repository.Projects
             {
 
                 throw ex;
+            }
+        }
+
+        public async Task<bool> DeleteEmployeHourLog(Guid id)
+        {
+            Hourlogs hourlogs = await _context.Hourlogs.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (hourlogs == null)
+            {
+                return false;
+            }
+            else
+            {
+                 _context.Hourlogs.Remove(hourlogs);
+                 await _context.SaveChangesAsync();
+                return true;
+
             }
         }
     }

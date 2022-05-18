@@ -112,6 +112,24 @@ namespace Web.ApiContollers
             }
         }
 
+
+        [HttpDelete("admin/delete-hour-log")]
+        public async Task<IActionResult> DeleteAdminHourlog(Guid Id)
+        {
+            string currentEmail = HttpContext.Session.GetString("current_user_email");
+
+            if (!string.IsNullOrEmpty(currentEmail))
+            {
+                bool deleteStatus = await _cmRepository.DeleteEmployeHourLog(Id);
+                return Ok(deleteStatus);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+        }
+
+
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet("load-hour-log")]
         public async Task<IActionResult> LoadAllHourLog()
