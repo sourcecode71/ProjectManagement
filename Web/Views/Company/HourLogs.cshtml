@@ -70,7 +70,7 @@
                         </div>
 
                         <div class=" mt-1 position-relative form-group">
-                            <label for="exampleText" class=""> <span id ="spComment"> Remarks : </span>  </label>
+                            <label for="exampleText" class=""> <span id ="spComment"> Comments : </span>  </label>
                             <textarea name="text"  v-model="comments" class="form-control"></textarea>
                         </div>
 
@@ -86,14 +86,13 @@
             <table  class="table table-striped table-bordered" style="width:100%">
                 <thead style="width:100%">
                     <tr>
-                        <th>SL</th>
-                        <th class="m-hide">Name </th>
-                        <th>OT No</th>
-                        <th>OT Name </th>
-                        <th> Spent Date </th>
-                        <th> Spent Hour </th>
-                        <th> Remarks </th>
-               
+                        <th style="width:5%">SL</th>
+                        <th style="width:18%" class="m-hide">Name </th>
+                        <th style="width:8%">OT No</th>
+                        <th style="width:18%">OT Name </th>
+                        <th style="width:7%"> Date </th>
+                        <th style="width:7%"> Hrs </th>
+                        <th style="width:25%"> Comments </th>
                     </tr>
                 </thead>
             <tbody>
@@ -104,7 +103,7 @@
                     <td>{{log.workOrderName}}</td>
                     <td>{{log.spentDateStr}}</td>
                     <td>{{log.spentHour}}</td>
-                    <td> {{log.remarks}} </td>
+                    <td style="width:35%"> {{log.remarks}} </td>
                 </tr>
         
              </tbody>

@@ -55,8 +55,9 @@
                                 { "width": "5%" },
                                 { "width": "10%" },
                                 { "width": "10%" },
-                                { "width": "25%" },
+                                { "width": "15%" },
                                 { "width": "40%" },
+                                { "width": "10%" },
                                 { "width": "10%" },
 
                             ]
@@ -175,9 +176,28 @@
                 });
 
         },
+        EmpHoursLogForOT: function (hrs) {
 
-   
+            console.log(" hrs --- ", hrs);
 
+            this.isHrsDetails = true;
+            const config = { headers: { "Content-Type": "application/json" } };
+            var base_url = window.location.origin;
+            const wrkURL = base_url + "/api/Employee/emp-wrk-hour?wrkId=" + hrs.id;
+
+            axios.get(wrkURL, config).then(
+                (result) => {
+
+                    console.log(" emp hrs ", this.empHrs);
+
+                    this.empHrs = result.data;
+                },
+                (error) => {
+                    console.error(error);
+                });
+
+
+        },
         empTotalLog: function (hrs) {
             var total_amount = 0;
             $.each(hrs, function (i, v) { total_amount += v.lhour; });
@@ -203,7 +223,7 @@
         wrkProgress: function (wrk) {
 
             if (wrk.budgetHour != 0) {
-                var wrkPC = 100 * (wrk.spentHour / wrk.budgetHour).toFixed(4) + "%";
+                var wrkPC = parseFloat(100 * (wrk.spentHour / wrk.budgetHour)).toFixed(2) + "%";
                 return wrkPC;
             } else {
                 return "0%";

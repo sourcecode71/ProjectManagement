@@ -310,6 +310,22 @@ namespace Web.ApiControllers
             return empDto;
         }
 
+        [HttpGet("emp-wrk-hour")]
+        public async Task<ActionResult<List<HourslogDto>>> GetEmpWorkOrderWisehourLogs(string wrkId)
+        {
+            string currentEmail = HttpContext.Session.GetString("current_user_email");
+            if (!string.IsNullOrEmpty(currentEmail))
+            {
+                string EmpId = HttpContext.Session.GetString("current_user_id");
+                var empDto = await _empRepository.GetEmpWiseWrkOThourLogs(EmpId, wrkId);
+                return empDto;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
 
         [HttpPut("emp-wrk-status")]
         public async Task<ActionResult<bool>> PutEmpStatus([FromBody] HourslogDto dto)

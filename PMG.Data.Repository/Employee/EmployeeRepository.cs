@@ -251,6 +251,7 @@ namespace PMG.Data.Repository.Employee
 
                         HourslogDto wOT = new HourslogDto()
                         {
+                            WrkId = rd.GetValue("Id").ToString() != null ? rd.GetValue("Id").ToString() : "",
                             EmpId = rd.GetValue("EmpId").ToString() != null ? rd.GetValue("EmpId").ToString() : "",
                             WrkNo = rd.GetValue("WorkOrderNo").ToString() != null ? rd.GetValue("WorkOrderNo").ToString() : "",
                             WrkName = rd.GetValue("ConsWork").ToString() != null ? rd.GetValue("ConsWork").ToString() : "",

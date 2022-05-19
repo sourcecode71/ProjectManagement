@@ -199,7 +199,8 @@
         wrkProgress: function (wrk) {
 
             if (wrk.budgetHour != 0) {
-                var wrkPC =100*(wrk.spentHour / wrk.budgetHour).toFixed(4) + "%";
+                var progress = 100 * (wrk.spentHour / wrk.budgetHour);
+                var wrkPC = parseFloat(progress).toFixed(2) + "%";
                 return wrkPC;
             } else {
                 return "0%";

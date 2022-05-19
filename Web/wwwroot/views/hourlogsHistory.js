@@ -97,8 +97,6 @@ const app = new Vue({
 
         ShowAllHRS: function (logs) {
             this.LoadEmpWiseHrs(logs.empId);
-
-
         },
 
         LoadEmpWiseHrs: function (empid) {
@@ -123,6 +121,30 @@ const app = new Vue({
                     }, 500);
                   
 
+                },
+                (error) => {
+                    console.error(error);
+                });
+        },
+
+        DeleteHourLog: function (log) {
+            console.log(" log --- ", log);
+            this.idForDeleted = log.wrkId; 
+            this.empId = log.empId;
+            $("#deleteConfirmModel").modal("show");
+        },
+
+        DeleteHourLogConfirm: function () {
+            const config = { headers: { "Content-Type": "application/json" } };
+            var base_url = window.location.origin;
+            const wrkURL = base_url + "/api/Company/admin/delete-hour-log?Id=" + this.idForDeleted;
+
+            axios.delete(wrkURL, config).then(
+                (result) => {
+                    if (result.data == true) {
+                        $("#deleteConfirmModel").modal("hide");
+                        this.LoadEmpWiseHrs(this.empId);
+                    }
                 },
                 (error) => {
                     console.error(error);
