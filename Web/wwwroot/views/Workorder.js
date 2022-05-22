@@ -22,6 +22,7 @@
     project: "0",
     description: null,
     comapny: "0",
+    OriginalBudget:0,
     seen: false,
     isName: false,
     showDetails: false,

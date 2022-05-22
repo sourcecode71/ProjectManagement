@@ -73,6 +73,7 @@ namespace Application.DTOs
         public string BudgetSubmitDateStr { get; set; }
         public double? ApprovedBudget { get; set; }
         public double Balance { get; set; }
+        public double OriginalBudget { get; set; }
         public string Comments { get; set; }
         public string WorkerOrderNo { get; set; }
         public Guid WorkOrderId { get; set; }

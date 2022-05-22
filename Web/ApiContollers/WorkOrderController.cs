@@ -165,6 +165,13 @@ namespace Web.ApiContollers
             return Ok(wrkList);
         }
 
+        [HttpGet("work-order-budget")]
+        public async Task<ActionResult> GetWorkOrderBUdgetHistory(Guid wrkId)
+        {
+            var wrkList = await _woRepository.GetBudgetHistory(wrkId);
+            return Ok(wrkList);
+        }
+
 
 
     }

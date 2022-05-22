@@ -217,7 +217,7 @@ namespace PMG.Data.Repository.Projects
                         WorkOrderId = dto.WorkOrderId,
                         ChangedBudget = appBudget,
                         OriginalBudget = pba.Budget,
-                        OriginalSetDate = pba.SetDate,
+                        OriginalSetDate = pba.BudgetSubmitDate,
                         OriginalSetUser = pba.SetUser,
                         SetUser = dto.SetUser,
                         SetDate = DateTime.Now,
@@ -232,6 +232,8 @@ namespace PMG.Data.Repository.Projects
                     pba.Budget = (double)(dto.ApprovedBudget == null ? 0 : dto.ApprovedBudget);
                     pba.Status = dto.Status;  // 0= waiting , 1= Approved , 2=Not approved , 3= Changed 
                     pba.Comments = dto.Comments;
+                    pba.BudgetSubmitDate = DateTime.Now;
+                    pba.SetUser = dto.SetUser;
 
 
                     int State = await _context.SaveChangesAsync();
@@ -253,7 +255,7 @@ namespace PMG.Data.Repository.Projects
         {
             try
             {
-                var prjoect = (from pa in _context.WorkOrderActivities
+                var prjoect = await (from pa in _context.WorkOrderActivities
                                join wr in _context.WorkOrder on pa.WorkOrderId equals wr.Id
                                join pr in _context.Projects on wr.ProjectId equals pr.Id
                                orderby pa.BudgetSubmitDate descending
@@ -268,7 +270,7 @@ namespace PMG.Data.Repository.Projects
                                    Budget = pa.Budget,
                                    ApprovalStatus = pa.Status,
                                    ApprovedBudget = pa.ApprovedBudget,
-                                   BudgetSubmitDateStr = pa.BudgetSubmitDate.ToString("dd/MM/yyyy"),
+                                   BudgetSubmitDateStr = pa.SetDate.ToString("dd/MM/yyyy"),
                                    ProjectNo = pr.ProjectNo,
                                    SceduleWeek = Convert.ToDouble(((wr.EndDate - wr.StartDate).TotalDays / 7).ToString("F")),
                                    Year = pr.Year,
@@ -278,7 +280,9 @@ namespace PMG.Data.Repository.Projects
 
                                }).Take(250).ToListAsync();
 
-                return await prjoect;
+              //  prjoect.Select(S => { S.OriginalBudget =this.GetOriginalBudget(S.WorkOrderId,S.Budget); return S; }).ToList();
+
+                return  prjoect;
             }
             catch (Exception ex)
             {
@@ -286,6 +290,8 @@ namespace PMG.Data.Repository.Projects
                 throw ex;
             }
         }
+
+        
 
         public async Task<List<ClientDTO>> GetAllClient()
         {
@@ -513,6 +519,12 @@ namespace PMG.Data.Repository.Projects
             }
         }
 
+        public double GetOriginalBudget(Guid wrkId,double ogbudget)
+        {
+            var budget = _context.HisBudgetActivities.Where(b => b.BudgetVersionNo == "v01" && b.WorkOrderId == wrkId).FirstOrDefault();
+            double OriginalBudget = budget==null ? ogbudget:  budget.OriginalBudget;
+            return OriginalBudget;
+        }
         public string GetPmBudgetNumber(ProjectApprovalDto projectDto)
         {
             DateTime CurrentDate = DateTime.Now;

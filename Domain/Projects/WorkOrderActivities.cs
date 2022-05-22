@@ -18,7 +18,7 @@ namespace Domain.Projects
         public string BudgetNo { get; set; }
         public string BudgetVersionNo { get; set; }
         public double Budget { get; set; }
-        public DateTime BudgetSubmitDate { get; set; }
+        public DateTime BudgetSubmitDate { get; set; } // Always updated date 
         public double? ApprovedBudget { get; set; }
         public double? BalanceBudget { get; set; }
         public int Status { get; set; } = 0;

@@ -44,7 +44,9 @@
                             @*    <td>{{wrk.year}}</td>
                                 <td>{{wrk.projectNo}}</td>*@
                                 <td>{{wrk.budegtNo}}</td>
-                                <td>{{wrk.budegtVersionNo}}</td>
+                                <td>
+                                    <a href="#" v-on:click="LoadBudgetHistory(wrk)" class="col-md-3"> {{wrk.budegtVersionNo}} </a>
+                                </td>
                                 <td>{{wrk.consecutiveWork}}</td>
                                 <td>{{formatCurrenct(wrk.budget)}}</td>
                                 <td>{{wrk.budgetSubmitDateStr}}</td>
@@ -68,8 +70,6 @@
                                 <thead>
                                     <tr>
                                         <th> # </th>
-                                       @* <th> Year </th>
-                                        <th> Project </th>*@
                                         <th> OT No </th>
                                          <th>  Version </th>
                                         <th> OT Name </th>
@@ -86,10 +86,10 @@
                                 <tbody>
                                 <tr v-for="(wrk,index) in wrkBudgets" :key="wrk.id">
                                     <td>{{index+1}}</td>
-                                   @* <td>{{wrk.year}}</td>
-                                    <td>{{wrk.projectNo}}</td>*@
                                     <td>{{wrk.workerOrderNo}}</td>
-                                    <td>{{wrk.budegtVersionNo}}</td>
+                                    <td>
+                                       <a href="#" v-on:click="LoadBudgetHistory(wrk)" class="col-md-3"> {{wrk.budegtVersionNo}} </a>
+                                    </td>
                                     <td>{{wrk.consecutiveWork}}</td>
                                     <td>{{formatCurrenct(wrk.budget)}}</td>
                                     <td>{{wrk.budgetSubmitDateStr}}</td>
@@ -132,7 +132,7 @@
                                  <div class=" row m-3">
                                       <div class="col-md-6 col-sm-6">  Budget No : {{budgetNo}}  </div>
                                       <div class="col-md-6 col-sm-6">  Work Order Name : {{wrkName}}  </div>
-                                      <div class="col-md-6 col-sm-6">  Budget : {{appBudget}}  </div>
+                                      <div class="col-md-6 col-sm-6">  Original Budget : {{originalBudget}}  </div>
                                       <div class="col-md-6 col-sm-6">  Submit Date : {{submitDate}}  </div>
                                  </div>
                                  
@@ -224,6 +224,47 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button v-on:click="statusChangeSubmit()"  type="button" class="btn btn-primary">  <strong> <i class='fa fa-save'></i> Submit </strong> </button>
                
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+          <div class="modal fade" id="budgetHistoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Budget History </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+
+                   <table  class="table table-striped table-bordered" style="width:100%;top:120px">
+                                <thead>
+                                    <tr>
+                                        <th> # </th>
+                                        <th>  Version </th>
+                                        <th> Date </th>
+                                        <th> Budget </th>
+                                        <th> Comments </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(wrk,index) in wrkBudgetsHis" :key="wrk.id">
+                                    <td>{{index+1}}</td>
+                                    <td>{{wrk.inv}}</td>
+                                    <td>{{wrk.dateStr}}</td>
+                                    <td>{{formatCurrenct(wrk.budget)}}</td>
+                                    <td> {{wrk.comments}}</td>
+                                </tr>
+                                </tbody>
+                        </table>
+                 
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>

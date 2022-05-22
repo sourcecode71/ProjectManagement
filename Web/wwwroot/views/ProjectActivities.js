@@ -15,6 +15,7 @@ const app = new Vue({
         seen: false,
         appComment:null,
         wrkBudgets: [],
+        wrkBudgetsHis: [],
         selectedWrk: null,
         companies: [],
         wrkStatus: [],
@@ -24,7 +25,8 @@ const app = new Vue({
         submitDate: '',
         wrkId: '',
         wrkStatus: '',
-        wrkComments:''
+        wrkComments: '',
+        originalBudget:0
 
     },
     methods: {
@@ -71,15 +73,14 @@ const app = new Vue({
         approvalPop: function (wrk) {
 
             this.selectedWrk = wrk;
-
-            console.log(" wrk -- ", wrk);
-
             if (wrk.approvalStatus == 0 || wrk.approvalStatus == 3) {
                 this.appBudget = this.formatCurrenct(wrk.budget);
                 this.wrkName = wrk.consecutiveWork;
                 this.budgetNo = wrk.budegtNo;
                 this.submitDate = wrk.budgetSubmitDateStr;
                 this.wrkId = wrk.workOrderId;
+
+                this.LoadOriginalBudget(wrk.workOrderId);
 
                 $("#exampleModal").modal("show");
 
@@ -95,6 +96,34 @@ const app = new Vue({
                     timer: 2000
                 });
             }
+        },
+
+        LoadOriginalBudget: function (wrkId) {
+
+            const config = { headers: { 'Content-Type': 'application/json' } };
+            var base_url = window.location.origin;
+            const clientURL = base_url + "/api/WorkOrder/work-order-budget?wrkId=" + wrkId;
+
+            axios.get(clientURL, config).then(result => {
+                this.originalBudget = this.formatCurrenct(result.data.originalBudget);
+            }, error => {
+                console.error(error);
+            });
+
+        },
+
+        LoadBudgetHistory: function (wrk) {
+            const config = { headers: { 'Content-Type': 'application/json' } };
+            var base_url = window.location.origin;
+            const clientURL = base_url + "/api/WorkOrder/work-order-budget?wrkId=" + wrk.workOrderId;
+
+            axios.get(clientURL, config).then(result => {
+                this.wrkBudgetsHis = result.data.bHistory;
+                $("#budgetHistoryModal").modal("show");
+            }, error => {
+                console.error(error);
+            });
+
         },
 
         statusChangeSubmit: function () {

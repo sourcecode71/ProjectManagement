@@ -18,6 +18,7 @@ namespace PMG.Data.Repository.Projects
         Task<List<WorkOrderDTO>> WorkOrderByProjects(string PrId);
         Task<WorkOrderDTO> LoadWorkOrdersById(string wrkId);
         Task<List<WorkOrderEmployeeDTO>> GetWorkOrderEmployee(Guid wrkId);
+        Task<BudgetDto> GetBudgetHistory(Guid wrkId);
 
     }
 }

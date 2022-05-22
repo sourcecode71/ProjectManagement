@@ -268,7 +268,7 @@ namespace PMG.Data.Repository.Projects
                         OTDescription = workOrder.OTDescription,
                         ProjectId = workOrder.ProjectId,
                         ProjectNo = workOrder.ProjectNo,
-                        SetDate = workOrder.SetDate,
+                        SetDate = DateTime.Now,
                         SetUser = workOrder.SetUser,
                         WorkOrderId = workOrder.Id,
                         WorkOrderNo = workOrder.WorkOrderNo,
@@ -348,7 +348,8 @@ namespace PMG.Data.Repository.Projects
                     WorkOrderNo = wrkNo,
                     Budget = dto.OriginalBudget,
                     BudgetSubmitDate = DateTime.Now,
-                    ApprovalSetUser = dto.SetUser
+                    ApprovalSetUser = dto.SetUser,
+                    SetDate = DateTime.Now,
                 };
 
                 _context.WorkOrderActivities.Add(wrkApproval);
@@ -594,6 +595,53 @@ namespace PMG.Data.Repository.Projects
 
                 throw ex;
             }
+        }
+
+        public async Task<BudgetDto> GetBudgetHistory(Guid wrkId)
+        {
+            var wrk = _context.WorkOrder.Where(p => p.Id == wrkId)
+                    .FirstOrDefault();
+
+            var budgets = await (from wct in _context.WorkOrderActivities
+                                 where wct.WorkOrderId == wrkId
+                                 select (new BudgetHistoryDto
+                                 {
+                                     Inv = wct.BudgetVersionNo,
+                                     Id = wct.WorkOrderId,
+                                     Budget = wct.Budget,
+                                     Date = wct.BudgetSubmitDate,
+                                     DateStr = wct.SetDate.ToString("MM/dd/yyyy"),
+                                     Comments = wct.Comments
+                                 })).ToListAsync();
+
+
+            var bdg = await (from bh in _context.HisBudgetActivities 
+                      where bh.WorkOrderId == wrkId
+                      select(new BudgetHistoryDto { 
+                          Id = bh.WorkOrderId,
+                          OriginalBudget = bh.OriginalBudget,
+                          Budget = bh.ChangedBudget,
+                          Comments = bh.Comments,
+                          Date = bh.OriginalSetDate,
+                          Inv = bh.BudgetVersionNo,
+                          DateStr = bh.OriginalSetDate.ToString("MM/dd/yyyyy"),
+                      })).ToListAsync();
+         
+            
+
+            if(bdg.Count>0)
+            {
+                budgets.AddRange(bdg);
+            }
+
+
+            BudgetDto budgetDto = new BudgetDto { 
+                 Id = wrk.Id,
+                 OriginalBudget =wrk.OriginalBudget,
+                 BHistory = budgets
+            };
+
+            return budgetDto;
         }
 
         private  string GetEmpRole(string empId)
