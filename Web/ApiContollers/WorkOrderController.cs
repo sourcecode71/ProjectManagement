@@ -28,7 +28,7 @@ namespace Web.ApiContollers
             return Ok(isSuccess);
         }
 
-        [HttpPut("update-work-order")]
+        [HttpPost("update-work-order")]
         public async Task<ActionResult> UpdateProjectApproval(WorkOrderDTO dTO)
         {
             bool isSuccess = await _woRepository.UpdateWorkOrder(dTO);
@@ -158,6 +158,12 @@ namespace Web.ApiContollers
             return Ok(wrkList);
         }
 
+        [HttpGet("work-orders-emp")]
+        public async Task<ActionResult> GetWorkOrderEmployee(Guid wrkId)
+        {
+            var wrkList = await _woRepository.GetWorkOrderEmployee(wrkId);
+            return Ok(wrkList);
+        }
 
 
 

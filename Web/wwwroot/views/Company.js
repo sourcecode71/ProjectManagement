@@ -2,8 +2,6 @@
   const app = new Vue({
       el: '#addCompany',
       beforeMount() {
-       
-
           this.loadAllClients();
           this.loadAllCompany();
     },
@@ -33,7 +31,6 @@
                 }).on('change', function (e) {
                     var id = $("#wrkProject option:selected").val();
                     slectedId = id;
-                    console.log(" selected data ", slectedId)
                 });
 
             }, 200);
@@ -136,6 +133,7 @@
             this.address ="";
             this.contactName = "";
             this.snPhone = "";
+            sessionStorage.setItem("selectClientId", "0");
         },
         validateEmail(email) {
             if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
@@ -153,15 +151,18 @@
                 axios.get(clientURL, config).then(result => {
 
                     this.clients = result.data;
-
-                   /* setTimeout(() => {
-                        $('#allClients').DataTable({
-                            "scrollY": "500px",
-                            "scrollCollapse": true,
-                            "paging": false
-                        });
-                    }, 100); */
-
+                    if (sessionStorage.getItem("selectClientId") != null || sessionStorage.getItem("selectClientId") != "0") {
+                        this.seen = true;
+                        setTimeout(() => {
+                            $("#wrkProject").val(sessionStorage.getItem("selectClientId")).select2();
+                            slectedId = sessionStorage.getItem("selectClientId");
+                        }, 100);
+                    } else {
+                        setTimeout(() => {
+                            $("#wrkProject").val("0").select2();
+                        }, 100);
+                        this.seen = false;
+                    }
                 
                 }, error => {
                     console.error(error);
@@ -197,7 +198,7 @@
                               { "width": "12%" },
                               { "width": "27%" }
                           ]
-                      }).fnAdjustColumnSizing(false);
+                      });
 
                   }, 500); 
 
@@ -215,8 +216,6 @@
             $("#allCompany").modal("show");
 
             axios.get(clientURL, config).then(result => {
-
-                console.log(result.data);
                 this.companies = result.data;
             }, error => {
                 Swal.fire({

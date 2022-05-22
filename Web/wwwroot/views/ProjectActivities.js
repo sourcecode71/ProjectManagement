@@ -9,7 +9,7 @@ const app = new Vue({
         errors: [],
         appStatus: 1,
         isApproved: true,
-        appBudget: null,
+        appBudget: 0,
         comment: null,
         bLabel:"Approved Budget",
         seen: false,
@@ -72,7 +72,9 @@ const app = new Vue({
 
             this.selectedWrk = wrk;
 
-            if (wrk.approvalStatus == 0 || wrk.approvalStatus == 3 ) {
+            console.log(" wrk -- ", wrk);
+
+            if (wrk.approvalStatus == 0 || wrk.approvalStatus == 3) {
                 this.appBudget = this.formatCurrenct(wrk.budget);
                 this.wrkName = wrk.consecutiveWork;
                 this.budgetNo = wrk.budegtNo;

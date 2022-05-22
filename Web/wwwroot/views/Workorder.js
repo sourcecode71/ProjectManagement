@@ -15,6 +15,7 @@
     wrk:'',
     name: null,
     consecutiveWork: null,
+    wrkProjectId:'',
     budget: "",
     startDate: "",
     endDate: "",
@@ -58,30 +59,37 @@
       pageName: 'Work Order',
       invDetails: [],
       assignEmp: [],
-      empHrsDetails :[]
+      empHrsDetails: [],
+      operationType :"Save"
   },
   methods: {
 
-      SubmitWorkOrder: function (e) {
+   SubmitWorkOrder: function (e) {
       this.errors = [];
       if (this.isValidFrom()) {
         const config = { headers: { "Content-Type": "application/json" } };
-        var base_url = window.location.origin;
-        const clientURL = base_url + "/api/workOrder/store-work-order";
+          var base_url = window.location.origin;
 
-        const wrkData = {
-          name: this.name,
-          consecutiveWork: this.consecutiveWork,
-          originalBudget: this.budget.substring(1).replace(",", ""),
-          startDate: this.startDate,
-          endDate: this.endDate,
-          projectId: projectId,
-          companyId: comapnyId,
-          week: this.pweek,
-          engineers: this.engineers,
-          drawings: this.drawings,
-          oTDescription: this.description,
-        };
+          var operations = this.operationType == "Update" ? "update-work-order" : "store-work-order";
+          const clientURL = base_url + "/api/workOrder/" + operations;
+          
+
+          const wrkData = {
+              workOrderId: this.wrkProjectId,
+              name: this.name,
+              consecutiveWork: this.consecutiveWork,
+              originalBudget: this.budget.substring(1).replace(",", ""),
+              startDate: this.startDate,
+              endDate: this.endDate,
+              projectId: projectId,
+              companyId: comapnyId,
+              week: this.pweek,
+              engineers: this.engineers,
+              drawings: this.drawings,
+              oTDescription: this.description,
+          };
+
+          var successMsg = this.operationType == "Save" ? "Record has been added successfully!" : "Record has been updates successfully!";
 
         axios
           .post(clientURL, wrkData, config)
@@ -89,7 +97,7 @@
             Swal.fire({
               position: "top-end",
               icon: "success",
-              title: "Record has been added successfully!",
+              title: successMsg,
               showConfirmButton: false,
               timer: 1500,
             });
@@ -108,7 +116,7 @@
       }
     },
 
-      loadAllProject: function () {
+   loadAllProject: function () {
       const config = { headers: { "Content-Type": "application/json" } };
       var base_url = window.location.origin;
       const clientURL = base_url + "/api/project/load-active-projects";
@@ -130,17 +138,20 @@
                           { "width": "9%" },
                           { "width": "9%" },
                           { "width": "12%" },
-                          { "width": "9%" },
+                          { "width": "5%" },
+                          { "width": "5%" }
                       ]
                   });
 
-              },100);
+              },1000);
         },
         (error) => {
           console.error(error);
         }
       );
-    },
+      },
+
+     
 
       loadAllcompany: function () {
       const config = { headers: { "Content-Type": "application/json" } };
@@ -167,10 +178,6 @@
         (result) => {
 
               $("#empWrkOrder").dataTable().fnDestroy();
-
-              console.log(" load work order ", result.data);
-
-
               setTimeout(() => {
                   this.workOrders = result.data;
 
@@ -201,7 +208,8 @@
       );
       },
 
-      LoadEmployee: function () {
+ 
+    LoadEmployee: function () {
       const config = { headers: { "Content-Type": "application/json" } };
       var base_url = window.location.origin;
       const clientURL = base_url + "/api/employee/all-active-employee";
@@ -282,12 +290,10 @@
       }
     },
     RemoveDrwaing: function (id) {
-      this.drawings = this.drawings.filter(function (el) {
-        return el.id != id;
-      });
+          this.drawings = this.drawings.filter(function (el) {
+            return el.id != id;
+          });
       },
-
-
       AssignInfo: function (wrk) {
 
           this.wrk = wrk;
@@ -346,9 +352,54 @@
 
       },
 
+      ClearAll: function () {
+          window.location.href = "";
+
+      },
+
+      EditWorkOrder: function (wrk) {
+        //  console.log(" wrk ", wrk);
+          this.seen = true;
+          var endDatestr = new Date(wrk.endDateStr).toISOString().split('T')[0];
+          var startDatestr = new Date(wrk.startDateStr).toISOString().split('T')[0];
+
+          setTimeout(() => {
+              $("#wrkProject")
+                  .val(wrk.projectId).select2();
+          },100)
+
+          this.wrkProjectId = wrk.id;
+          projectId = wrk.projectId;
+          this.consecutiveWork = wrk.consecutiveWork;
+          this.budget = this.formatCurrenct(wrk.originalBudget);
+          this.startDate = startDatestr;
+          this.endDate = endDatestr;
+          this.description = wrk.otDescription;
+
+          this.loadWorkOrderEmployee(wrk.id);
+          this.operationType = "Update";
+      },
+
+      loadWorkOrderEmployee: function (wrkId) {
+          const config = { headers: { "Content-Type": "application/json" } };
+          var base_url = window.location.origin;
+          const clientURL = base_url + "/api/WorkOrder/work-orders-emp?wrkId=" + wrkId;
+
+          axios.get(clientURL, config).then(
+              (result) => {
+                  console.log(" result ", result);
+                  this.engineers = [];
+                  this.engineers = result.data.filter(p => p.role == "Engineering");
+                  this.drawings = result.data.filter(p => p.role == "Drawing");
+              },
+              (error) => {
+                  console.error(error);
+              });
+
+      },
+
       showFullBudget: function (wrk, tp) {
           this.IsInv = true;
-
           $("#allWorkOrder").dataTable().fnDestroy();
           this.hrsDetails = !this.hrsDetails;
           this.pageName = this.hrsDetails ? "Invoice Details" : "Work Order";
@@ -383,15 +434,11 @@
       },
 
       showFullHrs: function (wrk, tp) {
-
           this.IsInv = false;
-
           $("#allWorkOrder").dataTable().fnDestroy();
           $("#invDetailsOrder").dataTable().fnDestroy();
           this.hrsDetails = !this.hrsDetails;
           this.pageName = this.hrsDetails ? "HRS Details" : "Work Order";
-
-
           this.LoadHoursLogSummery(wrk.id);
           this.LoadHoursLogDetails(wrk.id);
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -435,9 +482,6 @@
                           paging: false,
                       });
                   }, 500);
-
-
-                  //empHrsDetails
               },
               (error) => {
                   console.error(error);
@@ -468,13 +512,10 @@
         this.errors.push("Project is required.");
       }
 
-      //if (!comapnyId || comapnyId == "0") {
-      //  this.errors.push("Company is required.");
-      //}
-
       if (!this.consecutiveWork) {
         this.errors.push("Work order name is required.");
       }
+
 
       if (!this.budget) {
         this.errors.push("Budget is required.");
@@ -507,7 +548,8 @@
         .match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
       this.phone = "(" + x[1] + ") " + x[2] + "-" + x[3];
     },
-    clearAll: function () {
+      clearAll: function () {
+      this.operationType = "Save";
       this.project = "0";
       this.comapny = "0";
       this.startDate = "";

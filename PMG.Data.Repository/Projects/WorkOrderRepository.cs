@@ -83,7 +83,7 @@ namespace PMG.Data.Repository.Projects
             try
             {
                 DbCommand cmd = _context.Database.GetDbConnection().CreateCommand();
-                cmd.CommandText = "dbo.Wrk_AllWorkOrder_Emp_Wise";
+                cmd.CommandText = "dbo.Wrk_AllWrkHrs_Emp_Wise";
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 var param = cmd.CreateParameter();
@@ -278,16 +278,19 @@ namespace PMG.Data.Repository.Projects
 
                     workOrder.UpdateDate = DateTime.Now;
                     workOrder.UpdateUser = "admin";
-                    workOrder.Comments = dTO.Comments;
-                    workOrder.ApprovedBudget = dTO.ApprovedBudget;
-                    workOrder.Balance = dTO.ApprovedBudget;
+                    workOrder.OTDescription = dTO.OTDescription;
+                    workOrder.OriginalBudget = dTO.OriginalBudget;
+                    workOrder.StartDate = dTO.StartDate;
+                    workOrder.EndDate = dTO.EndDate;
                     workOrder.ProjectId = dTO.ProjectId;
                     workOrder.ProjectNo = dTO.ProjectNo;
+
+                    this.ReAssignWorkOrderEmploye(dTO, dTO.WorkOrderId);
 
                     int state = await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
 
-                    return state == 1;
+                    return true;
 
                 }
                 catch (Exception ex)
@@ -360,10 +363,44 @@ namespace PMG.Data.Repository.Projects
             }
         }
 
-
-
         private void AssignWorkOrderEmploye(WorkOrderDTO dto, string wrkId)
         {
+            foreach (ProjectEmp emp in dto.Engineers)
+            {
+                string pId = (Guid.NewGuid()).ToString();
+                WorkOrderEmployee empW = new WorkOrderEmployee
+                {
+                    WorkOrderId = new Guid(wrkId),
+                    EmployeeId = emp.Id,
+                    BudgetHours = emp.hour,
+                    EmployeeType = EmployeeType.Engineering
+                };
+
+                _context.WorkOrderEmployee.Add(empW);
+            }
+
+            foreach (ProjectEmp emp in dto.Drawings)
+            {
+                string pId = (Guid.NewGuid()).ToString();
+                WorkOrderEmployee empWD = new WorkOrderEmployee
+                {
+                    WorkOrderId = new Guid(wrkId),
+                    EmployeeId = emp.Id,
+                    BudgetHours = emp.hour,
+                    EmployeeType = EmployeeType.Drawing
+                };
+
+                _context.WorkOrderEmployee.Add(empWD);
+            }
+        }
+
+        private void ReAssignWorkOrderEmploye(WorkOrderDTO dto, string wrkId)
+        {
+            List<WorkOrderEmployee> wrkList = _context.WorkOrderEmployee.
+                Where(p=>p.WorkOrderId == new Guid(wrkId)).ToList();
+
+            _context.WorkOrderEmployee.RemoveRange(wrkList);
+
             foreach (ProjectEmp emp in dto.Engineers)
             {
                 string pId = (Guid.NewGuid()).ToString();
@@ -530,6 +567,44 @@ namespace PMG.Data.Repository.Projects
 
                 throw ex;
             }
+        }
+
+        public async Task<List<WorkOrderEmployeeDTO>> GetWorkOrderEmployee(Guid wrkId)
+        {
+            try
+            {
+                var wrkDT = await (from w in _context.WorkOrderEmployee
+                                   join emp in _context.Employees on w.EmployeeId equals emp.Id
+                                   where w.WorkOrderId == wrkId
+                                   select (new WorkOrderEmployeeDTO
+                                   {
+                                       Id = w.EmployeeId,
+                                       Name =string.Format("{0} {1}", emp.FirstName,emp.LastName),
+                                       Hour = w.BudgetHours,
+                                       WrkId = w.WorkOrderId.ToString(),
+                                   })).ToListAsync();
+
+                 wrkDT.Select(S => { S.Role = this.GetEmpRole(S.Id); return S; }).ToList();
+
+                return wrkDT;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        private  string GetEmpRole(string empId)
+        {
+            var Role = (from ur in _context.UserRoles
+                        join u in _context.Users on ur.UserId equals u.Id
+                        join r in _context.Roles on ur.RoleId equals r.Id
+                        where (ur.UserId == empId)
+                        select new { r.Name }).FirstOrDefault();
+
+            return Role == null ? "Admin" : Role.Name;
         }
 
         private string GetStatusString(ProjectStatus status)

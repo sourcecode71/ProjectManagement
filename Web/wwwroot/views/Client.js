@@ -3,12 +3,12 @@
       el: '#app',
       beforeMount() {
           this.loadAllClients();
-          
     },
     data: {
             errors: [],
             name: null,
             contactName: '',
+            selectClientId :'',
             email: null,
             phone: '',
             sndPhone:'',
@@ -98,8 +98,6 @@
                 axios.get(clientURL, config).then(result => {
                     $("#allClients").dataTable().fnDestroy();
 
-                    console.log(" client --", result);
-
                     setTimeout(() => {
                         this.clients = result.data;
                     }, 100);
@@ -119,7 +117,7 @@
                                 { "width": "15%" }
                             ]
                         });
-                    }, 500);
+                    }, 1000);
 
                 }, error => {
                     console.error(error);
@@ -130,6 +128,7 @@
 
             const config = { headers: { 'Content-Type': 'application/json' } };
             var base_url = window.location.origin;
+            this.selectClientId = client.id;
             const clientURL = base_url + "/api/company/all-companies-client?guid=" + client.id;
 
             $("#allCompany").modal("show");
@@ -145,6 +144,14 @@
                     confirmButtonText: 'Ok',
                 })
             });
+
+          },
+
+          CreateCompany: function () {
+              console.log("  this.selectClientId ", this.selectClientId);
+              window.sessionStorage.setItem("selectClientId", this.selectClientId);
+              $("#allCompany").modal("hide");
+              window.location.href = "/company"
 
           },
      

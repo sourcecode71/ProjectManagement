@@ -104,8 +104,8 @@
                         <th>OT Name </th>
                         <th> Spent Date </th>
                         <th> Spent Hour </th>
+                        <th> Comments </th>
                         <th> Action </th>
-               
                     </tr>
                 </thead>
             <tbody>
@@ -116,6 +116,7 @@
                     <td>{{log.workOrderName}}</td>
                     <td>{{log.spentDateStr}}</td>
                     <td>{{log.spentHour}}</td>
+                    <td>{{log.remarks}}</td>
                     <td>
                         <button style="text-align:right" type="button" v-on:click="DeleteHrs(log)"
                             class="btn btn-sm btn-outline-info"> Delete
