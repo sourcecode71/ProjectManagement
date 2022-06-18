@@ -58,6 +58,9 @@
                                 <button type="button" v-on:click="approvalPop(wrk)" class="btn btn-outline-info btn-sm">
                                     <i class="metismenu-icon pe-7s-pen"></i>
                                 </button> 
+                                <button type="button" v-on:click="createApproval(wrk)" class="btn btn-outline-info btn-sm">
+                                    <i class="metismenu-icon pe-7s-wallet"></i>
+                                </button> 
                             </td>
                             </tr>
                             </tbody>
@@ -230,7 +233,7 @@
         </div>
 
 
-          <div class="modal fade" id="budgetHistoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+       <div class="modal fade" id="budgetHistoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -265,6 +268,26 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+       <div class="modal fade" id="confirmInvoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Proposal Confirmation </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <h6> Are you sure want to create invoice? </h6>
+              </div>
+              <div class="modal-footer">
+                 <button type="button" class ="btn alert-secondary" v-on:click="confirmCreateInvoice()"> Confirm </button>
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>

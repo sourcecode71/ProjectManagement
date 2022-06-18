@@ -8,6 +8,7 @@
     this.loadAllcompany();
     this.loadAllWorkOrder();
     this.LoadEmployee();
+    this.ComeFromProposal();
     
   },
   data: {
@@ -61,6 +62,7 @@
       invDetails: [],
       assignEmp: [],
       empHrsDetails: [],
+      proposal:'',
       operationType :"Save"
   },
   methods: {
@@ -151,10 +153,7 @@
         }
       );
       },
-
-     
-
-      loadAllcompany: function () {
+   loadAllcompany: function () {
       const config = { headers: { "Content-Type": "application/json" } };
       var base_url = window.location.origin;
       const clientURL = base_url + "/api/company/all-companies";
@@ -168,7 +167,6 @@
         }
       );
     },
-
    loadAllWorkOrder: function () {
 
       const config = { headers: { "Content-Type": "application/json" } };
@@ -208,9 +206,7 @@
         }
       );
       },
-
- 
-    LoadEmployee: function () {
+   LoadEmployee: function () {
       const config = { headers: { "Content-Type": "application/json" } };
       var base_url = window.location.origin;
       const clientURL = base_url + "/api/employee/all-active-employee";
@@ -225,6 +221,7 @@
           console.error(error);
         });
       },
+ 
 
     AddEnginer: function () {
       this.engErrors = [];
@@ -295,7 +292,7 @@
             return el.id != id;
           });
       },
-      AssignInfo: function (wrk) {
+    AssignInfo: function (wrk) {
 
           this.wrk = wrk;
 
@@ -388,7 +385,6 @@
 
           axios.get(clientURL, config).then(
               (result) => {
-                  console.log(" result ", result);
                   this.engineers = [];
                   this.engineers = result.data.filter(p => p.role == "Engineering");
                   this.drawings = result.data.filter(p => p.role == "Drawing");
@@ -624,6 +620,9 @@
             });
         }, 150);
       }
-    },
+      }
+
+     
+     
   },
 });

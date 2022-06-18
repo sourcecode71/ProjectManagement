@@ -364,7 +364,7 @@ namespace PMG.Data.Repository.Projects
                                           Status = EnumConverter.ProjectStatusString(prj.Status)
                                       }).Distinct().ToListAsync();
 
-                return projects.OrderBy(p => p.ProjectNo).ToList();
+                return projects.OrderByDescending(p => p.ProjectNo).ToList();
             }
             catch (Exception ex)
             {
@@ -415,13 +415,16 @@ namespace PMG.Data.Repository.Projects
                 {
                     string ProjectNo = this.GetProjectNumber(dto);
                     string cnPid = Guid.NewGuid().ToString();
+                   
 
                     Project projectDomain = new Project
                     {
                         Id = cnPid,
                         Year = DateTime.Now.Year,
                         ProjectNo = ProjectNo,
+                        ProposalsId = dto.ProposalId=="0"? new Guid() : new Guid(dto.ProposalId),
                         Balance = dto.Budget,
+                        Budget = dto.Budget,
                         CompanyId = new Guid(dto.CompanyId),
                         Week = dto.Week,
                         DeliveryDate = DateTime.Now.AddDays(dto.Week * 7),
@@ -435,6 +438,13 @@ namespace PMG.Data.Repository.Projects
                     };
 
                     _context.Projects.Add(projectDomain);
+
+                    if(dto.ProposalId != "0" )
+                    {
+                        var proposal = _context.Proposals.FirstOrDefault(p => p.Id == new Guid(dto.ProposalId));
+                        if(proposal !=null)
+                         proposal.ApprovalStatus = EnumApprovalStatus.Approve;
+                    }
 
                     // this.AssignProjectEmploye(dto,cnPid);
 

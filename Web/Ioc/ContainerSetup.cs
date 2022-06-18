@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PMG.Data.Repository.Employee;
 using PMG.Data.Repository.PayInvoice;
 using PMG.Data.Repository.Projects;
+using PMG.Data.Repository.Proposal;
 
 namespace Web.Ioc
 {
@@ -20,6 +21,7 @@ namespace Web.Ioc
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+            services.AddScoped<IOTProposal, OTProposal>();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Application.DTOs
         public int Year { get; set; }
         public double Week { get; set; }
         public string ProjectNo { get; set; }
+        public string ProposalId {get;set;}
         public string CompanyId { get; set; }
         public string Client { get; set; }
         public string CompanyName { get; set; }

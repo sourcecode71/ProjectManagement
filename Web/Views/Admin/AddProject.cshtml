@@ -55,13 +55,6 @@
 
                             <div class="com-md-6 col-sm-12 col-lg-6">
                                 <label for="addProjectClient">Company </label>
-                               @* <select v-model="client" id="pClient" class="form-control">
-                                    <option :value="0"> Please select a Company </option>
-                                    <option v-for="client in clients" :value="client.id">
-                                        {{ client.name }}
-                                    </option>
-                                </select>*@
-
                                 <select v-model="companyId" id="pCompany" class="form-control">
                                     <option :value="0"> Please select a Company </option>
                                     <option v-for="company in companies" :value="company.id">
@@ -71,11 +64,7 @@
 
                             </div>
 
-                         @*   <div class="com-md-6 col-sm-12 col-lg-6 mt-2">
-                                <label for="addbudget" >Budget </label>
-                                <input type="text" v-model="budget" v-on:keypress="isNumber($event)"
-                                    v-on:blur="formatNumber" value="$ 0" class="form-control" />
-                            </div>*@
+                       
                             <div class="com-md-6 col-sm-12 col-lg-6 mt-2">
                                 <label for="pWeek" >Schedule Weeks </label>
                                 <input type="text" v-model="pweek" v-on:keypress="isNumber($event)"

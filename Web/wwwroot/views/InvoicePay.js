@@ -3,6 +3,7 @@
     beforeMount() {
         selectedWrkId = "0";
         this.loadAllWorkOrder();
+        this.comeFromActInvo();
         this.loadAllInvoice();
     },
     data: {
@@ -176,6 +177,15 @@
 
         },
 
+        comeFromActInvo: function () {
+            var wrkId = this.getUrlParameter("wid");
+            if (wrkId) {
+                this.seen = true;
+                this.wrkS = wrkId;
+               // $('#wrkOrderId').val(wrkId).trigger('change');
+            }
+        },
+
         isNumber: function (evt) {
             evt = evt ? evt : window.event;
             var charCode = evt.which ? evt.which : evt.keyCode;
@@ -255,6 +265,14 @@
             });
 
             return dollarUS.format(Crn);
+
+        },
+        getUrlParameter: function (param) {
+            var results = new RegExp('[\?&]' + param + '=([^&#]*)').exec(window.location.href);
+            if (results == null) {
+                return null;
+            }
+            return decodeURI(results[1]) || 0;
 
         }
     }

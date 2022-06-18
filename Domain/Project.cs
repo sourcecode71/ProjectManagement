@@ -1,5 +1,6 @@
 using Domain.Enums;
 using Domain.Projects;
+using Domain.Proposal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -44,6 +45,7 @@ namespace Domain
         public ProjectStatus Status { get; set; }
         public string AdminDelayedComment { get; set; }
         public string AdminModifiedComment { get; set; }
+        public Guid ?ProposalsId { get; set; }
         public List<ProjectActivity> Activities { get; set; } = new List<ProjectActivity>();
         public virtual ICollection<ProjectEmployee> ProjectEmployees { get; set; } = new List<ProjectEmployee>();
         public virtual ICollection<ProjectsStatus> ProjectsStatus { get; set; }

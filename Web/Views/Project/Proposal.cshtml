@@ -1,0 +1,208 @@
+﻿@{
+	ViewData["Title"] = "Proposal";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Web.Models
+@model ProjectPageDetails
+@{
+	string currentName = "";
+	string currentRole = "";
+	string currentEmail = "";
+
+	byte[] currentRoleByte;
+	byte[] currentNameByte;
+	byte[] currentEmailByte;
+
+	if (Context.Session.Keys.Count() > 0)
+	{
+		Context.Session.TryGetValue("current_user_role", out currentRoleByte);
+		Context.Session.TryGetValue("current_user_name", out currentNameByte);
+		Context.Session.TryGetValue("current_user_email", out currentEmailByte);
+
+
+		if (currentRoleByte != null && currentNameByte != null && currentEmailByte != null)
+		{
+			currentRole = System.Text.Encoding.Default.GetString(currentRoleByte);
+			currentName = System.Text.Encoding.Default.GetString(currentNameByte);
+			currentEmail = System.Text.Encoding.Default.GetString(currentEmailByte);
+		}
+	}
+}
+
+
+
+<div>
+    <link rel="stylesheet" href="~/css/aa-project.css" />
+    <link rel="stylesheet" href="~/css/data-table.css" />
+
+    <div class="main-card mb-3 card">
+        <div id="addProject" class="card-body">
+            <h5 class="card-title"> Proposal</h5>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-9 col-lg-9">
+
+                    <form v-if="seen" class="ml-5" method="post" novalidate="true">
+                        <p v-if="errors.length">
+                            <b class="text-danger">Please correct the following error(s):</b>
+                        <ul>
+                            <li v-for="error in errors" class="text-danger">{{ error }}</li>
+                        </ul>
+                        </p>
+
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label for="name" class="">Propsal Name</label>
+                                    <input name="name" id="name" placeholder="Name" type="text" class="form-control"
+                                        v-model="propsalName">
+                                </div>
+                            </div>
+
+                            <div class="com-md-6 col-sm-12 col-lg-6">
+                                <label for="addProjectClient">Company </label>
+                                <select v-model="companyId" id="pCompany" class="form-control">
+                                    <option :value="0"> Please select a Company </option>
+                                    <option v-for="company in companies" :value="company.id">
+                                        {{ company.name }}
+                                    </option>
+                                </select>
+
+                            </div>
+
+                       
+                            <div class="com-md-6 col-sm-12 col-lg-6 mt-2">
+                                <label for="pWeek" >Estimate Budget </label>
+                                <input type="text" v-model="estimateBudget" v-on:keypress="isNumber($event)"
+                                  v-on:blur="formatNumber"  class="form-control" />
+                            </div>
+
+                            <div class="com-md-12 col-sm-12 col-lg-12 ">
+                                 <label for="workOrder"> Comments  </label>
+                                 <textarea v-model="comments" class="form-control" > </textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-4 mb-3 ml-2">
+                             <button type="button" style="width:140px"  v-on:click="SubmitProposal()" class="btn btn-outline-primary" >  Submit  </button>
+                        </div>
+                    </form>
+
+                        <div>
+
+                      
+                </div>
+            </div>
+
+
+
+
+            <div class="col-12 mb-3">
+                <div class="mb-4">
+                        @if (currentRole == "Admin")
+                        {
+                            <button v-on:click="addNewDivVisibility()" type="button" class="btn btn-outline-warning mt-4">
+                                <i v-if="!seen" class="pe-7s-plus"> </i> 
+                                  <i v-if="seen" class="pe-7s-less"> </i>
+                                 <strong> Proposal   </strong> 
+                              </button>
+                       }
+
+                </div>
+
+                  
+           </div>
+
+           <div class="col-12">
+               <h5 class="card-title">Proposal List </h5>
+                         <table id="allProposal" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>SL</th>
+                                    <th>P.No</th>
+                                    <th>Name</th>
+                                     <th>Company </th>
+                                    <th>Budget</th>
+                                    <th> Submitted</th>
+                                    <th> Status</th>
+                                    <th> Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(allP,index) in proposals" :key="allP.id">
+                                    <td>{{index+1}}</td>
+                                    <td>{{allP.proposalNo}}</td>
+                                    <td>{{allP.proposalName }}</td>
+                                    <td>{{allP.companyName}}</td>
+                                    <td>{{allP.estimateBudget}}</td>
+                                    <td>{{allP.submitDateStr}}</td>
+                                    <td>{{allP.approvalStatusStr}}</td>
+                                    <td> 
+                                        <button type="button" v-on:click="ApprovedProposal(allP)" class="btn btn-outline-info btn-sm">
+                                            <i class="metismenu-icon pe-7s-check"></i> Approved
+                                        </button> 
+
+                                         <button type="button" v-on:click="RejectedProposal(allP)" class="btn btn-outline-info btn-sm">
+                                            <i class="metismenu-icon pe-7s-close-circle"></i> Rejected 
+                                        </button> 
+                                        
+                                    </td>
+                                </tr>
+        
+                                </tbody>
+
+           
+                              </table>
+           </div>
+
+
+        </div>
+
+
+
+        <div class="modal fade" id="confirmApproval" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Proposal Confirmation </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <h6> Approved the proposal and Create Work order now </h6>
+                 
+              </div>
+              <div class="modal-footer">
+                 <button type="button" class ="btn alert-secondary" v-on:click="ConfirmApprovedProposal()"> Confirm </button>
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+           <div class="modal fade" id="confirmReject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Proposal Confirmation </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <h6> Are you confirm, want to reject the proposal </h6>
+              </div>
+              <div class="modal-footer">
+                 <button type="button" class ="btn alert-secondary" v-on:click="ConfirmRejectProposal()"> Confirm </button>
+                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+    <script src="~/views/Proposal.js"></script>
+
+</div>
+</div>

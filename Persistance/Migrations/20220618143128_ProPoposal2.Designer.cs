@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistance.Context;
 
 namespace Persistance.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220618143128_ProPoposal2")]
+    partial class ProPoposal2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,6 +306,8 @@ namespace Persistance.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProposalsId");
 
                     b.ToTable("Projects");
                 });
@@ -1145,6 +1149,15 @@ namespace Persistance.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("Domain.Project", b =>
+                {
+                    b.HasOne("Domain.Proposal.Proposals", "Proposals")
+                        .WithMany()
+                        .HasForeignKey("ProposalsId");
+
+                    b.Navigation("Proposals");
                 });
 
             modelBuilder.Entity("Domain.ProjectActivity", b =>

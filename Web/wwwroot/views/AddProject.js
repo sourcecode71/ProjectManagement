@@ -5,6 +5,7 @@
         this.loadAllcompany();
         this.LoadEmployee();
         this.LoadAllActiveProjects();
+        this.ComeFromProposal();
     },
     data: {
         errors: [],
@@ -28,7 +29,9 @@
         allProjects: [],
         wrksBYP: [],
         companies: [],
-        companyId:'0',
+        companyId: '0',
+        proposal: '',
+        proposalId: '0',
         hideNow: false,
         seen: false
 
@@ -49,11 +52,14 @@
                 var base_url = window.location.origin;
                 const clientURL = base_url + "/api/project/create-new-project";
 
+
                 let project = {
+                    proposalId: this.proposalId,
                     name: this.name,
                     companyId: this.companyId,
                     week: this.pweek,
-                    description: this.workorderDesc
+                    description: this.workorderDesc,
+                    budget: this.budget ? this.budget:0
                 }
 
                 axios.post(clientURL, project, config)
@@ -183,6 +189,39 @@
 
         },
 
+        ComeFromProposal: function () {
+            var pid = this.getUrlParameter('pid');
+          
+
+            if (pid) {
+                this.seen = true;
+
+                const config = { headers: { "Content-Type": "application/json" } };
+                var base_url = window.location.origin;
+                const clientURL = base_url + "/api/proposal/proposal?pid=" + pid;
+
+                axios.get(clientURL, config).then(
+                    (result) => {
+                        this.proposal = result.data;
+
+                        this.proposalId = this.proposal.id;
+                        this.budget = this.proposal.estimateBudget;
+                        this.name = this.proposal.proposalName;
+                        this.workorderDesc = this.proposal.comments;
+                        this.companyId = this.proposal.companyId;
+
+                        console.log("pid --- ", this.proposal);
+
+                    },
+                    (error) => {
+                        console.error(error);
+                    }
+                );
+
+            }
+
+        },
+
         /************ clerical  Work ****************/
 
         isNumber: function (evt) {
@@ -248,6 +287,15 @@
 
                 }, 200);
         },
+
+        getUrlParameter: function (param) {
+            var results = new RegExp('[\?&]' + param + '=([^&#]*)').exec(window.location.href);
+            if (results == null) {
+                return null;
+            }
+            return decodeURI(results[1]) || 0;
+
+        }
     },
 
    

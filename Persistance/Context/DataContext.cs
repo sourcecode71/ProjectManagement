@@ -1,6 +1,7 @@
 using Domain;
 using Domain.Common;
 using Domain.Projects;
+using Domain.Proposal;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +31,7 @@ namespace Persistance.Context
         public DbSet<WorkOrderActivities> WorkOrderActivities { get; set; }
         public DbSet<HisBudgetActivities> HisBudgetActivities { get; set; }
         public DbSet<WorkOrderEmployee> WorkOrderEmployee { get; set; }
+        public DbSet<Proposals> Proposals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,4 +1,5 @@
 ﻿using Domain.Enums;
+using Domain.Proposal;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -38,6 +39,7 @@ namespace Domain.Projects
         public ProjectStatus Status { get; set; } = ProjectStatus.Active;
         public DateTime? UpdateDate { get; set; }
         public bool IsInvoiced { get; set; }
+ 
     }
 
     public class HisWorkOrder : BasedModel

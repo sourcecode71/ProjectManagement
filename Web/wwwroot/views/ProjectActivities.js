@@ -98,6 +98,15 @@ const app = new Vue({
             }
         },
 
+        createApproval: function (wrk) {
+            this.wrkId = wrk.workOrderId;
+            $("#confirmInvoice").modal("show");
+        },
+
+        confirmCreateInvoice: function () {
+            window.location.href = '/company/invoice?wid=' + this.wrkId;
+        },
+
         LoadOriginalBudget: function (wrkId) {
 
             const config = { headers: { 'Content-Type': 'application/json' } };
@@ -213,13 +222,13 @@ const app = new Vue({
                             { "width": "2%" },
                             { "width": "10%" },
                             { "width": "8%" },
-                            { "width": "20%" },
+                            { "width": "18%" },
                             { "width": "6%" },
                             { "width": "6%" },
                             { "width": "8%" },
                             { "width": "8%" },
                             { "width": "6%" },
-                            { "width": "10%" },
+                            { "width": "12%" },
                         ]
                     });
 
