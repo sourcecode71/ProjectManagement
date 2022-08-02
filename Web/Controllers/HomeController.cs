@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Diagnostics;
 using Web.Models;
 using Web.Services;
@@ -56,37 +57,47 @@ namespace Web.Controllers
 
         public ResultModel Login(EmployeeModel loginUser)
         {
-            ResultModel result = _apiService.CallLogin(loginUser).Result;
-
-            if (result.IsSuccess)
+            try
             {
-                EmployeeModel loggedInUser = (EmployeeModel)result.Result;
-                SetSessionString("current_user_token", loggedInUser.Token);
-                SetSessionString("current_user_email", loggedInUser.Email);
-                SetSessionString("current_user_role", loggedInUser.Role);
-                SetSessionString("current_user_name", loggedInUser.Name);
-                SetSessionString("current_user_id", loggedInUser.Id);
+                ResultModel result = _apiService.CallLogin(loginUser).Result;
 
-                // TODO : Remove above code and use the following code
+                if (result.IsSuccess)
+                {
+                    EmployeeModel loggedInUser = (EmployeeModel)result.Result;
+                    SetSessionString("current_user_token", loggedInUser.Token);
+                    SetSessionString("current_user_email", loggedInUser.Email);
+                    SetSessionString("current_user_role", loggedInUser.Role);
+                    SetSessionString("current_user_name", loggedInUser.Name);
+                    SetSessionString("current_user_id", loggedInUser.Id);
 
-                //var claims = new List<Claim>
-                //{
-                //    new Claim(ClaimTypes.NameIdentifier, loggedInUser.Id.ToString()),
-                //    new Claim(ClaimTypes.Name, loggedInUser.Name),
-                //    new Claim(ClaimTypes.Role, loggedInUser.Role),
-                //    new Claim("token", loggedInUser.Token),
-                //};
+                    // TODO : Remove above code and use the following code
 
-                //var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                //var principal = new ClaimsPrincipal(identity);
+                    //var claims = new List<Claim>
+                    //{
+                    //    new Claim(ClaimTypes.NameIdentifier, loggedInUser.Id.ToString()),
+                    //    new Claim(ClaimTypes.Name, loggedInUser.Name),
+                    //    new Claim(ClaimTypes.Role, loggedInUser.Role),
+                    //    new Claim("token", loggedInUser.Token),
+                    //};
 
-                // HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                //        principal,
-                //        new AuthenticationProperties { IsPersistent = true });
+                    //var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    //var principal = new ClaimsPrincipal(identity);
 
+                    // HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                    //        principal,
+                    //        new AuthenticationProperties { IsPersistent = true });
+
+                }
+
+                return result;
             }
+            catch (System.Exception ex)
+            {
 
-            return result;
+                _logger.LogInformation(ex.Message,
+                  DateTime.UtcNow.ToLongTimeString());
+                throw ex;
+            }
         }
 
         [HttpPost]

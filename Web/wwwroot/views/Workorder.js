@@ -90,6 +90,7 @@
               engineers: this.engineers,
               drawings: this.drawings,
               oTDescription: this.description,
+              workOrderNo: this.wrkNo
           };
 
           var successMsg = this.operationType == "Save" ? "Record has been added successfully!" : "Record has been updates successfully!";
@@ -356,7 +357,9 @@
       },
 
       EditWorkOrder: function (wrk) {
-        //  console.log(" wrk ", wrk);
+
+          console.log(" wrk ", wrk);
+
           this.seen = true;
           var endDatestr = new Date(wrk.endDateStr).toISOString().split('T')[0];
           var startDatestr = new Date(wrk.startDateStr).toISOString().split('T')[0];
@@ -373,6 +376,7 @@
           this.startDate = startDatestr;
           this.endDate = endDatestr;
           this.description = wrk.otDescription;
+          this.wrkNo = wrk.workOrderNo;
 
           this.loadWorkOrderEmployee(wrk.id);
           this.operationType = "Update";

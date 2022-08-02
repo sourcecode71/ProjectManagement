@@ -211,7 +211,7 @@ namespace PMG.Data.Repository.Projects
             {
                 try
                 {
-                    string OTNo = GetWorkOrderNumber(dTO);
+                    string OTNo = dTO.WorkOrderNo !=null ? dTO.WorkOrderNo : GetWorkOrderNumber(dTO);
                     Guid guid = Guid.NewGuid();
 
                     var pmWorkOrder = new WorkOrder
@@ -257,6 +257,8 @@ namespace PMG.Data.Repository.Projects
                 try
                 {
                     WorkOrder workOrder = await _context.WorkOrder.FirstOrDefaultAsync(p => p.Id == new Guid(dTO.WorkOrderId));
+
+                    workOrder.WorkOrderNo = dTO.WorkOrderNo != null ? dTO.WorkOrderNo : workOrder.WorkOrderNo;
 
                     HisWorkOrder hisWork = new HisWorkOrder
                     {

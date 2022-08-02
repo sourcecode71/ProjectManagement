@@ -113,7 +113,7 @@ namespace PMG.Data.Repository.Proposal
         private string GetProposalNo()
         {
             DateTime CurrentDate = DateTime.Now;
-            var PmOTCount = _context.WorkOrder.Where(P => P.Year == CurrentDate.Year).Count() + 1;
+            var PmOTCount = _context.Proposals.Where(P => P.SetDate.Year == CurrentDate.Year).Count() + 1;
             string ProposalNo = string.Format("{0}{1}", CurrentDate.Year, PmOTCount.ToString("00000"));
             return ProposalNo;
         }
