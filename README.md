@@ -2,7 +2,8 @@
 Freelance project
 
 
-git push https://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@github.com/sourcecode71/ProjectManagement.git
+
+git push https://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@github.com/sourcecode71/ProjectManagement.git
 
 
 
