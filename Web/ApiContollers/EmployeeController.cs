@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Web.Models;
 using Web.Services;
 
 namespace Web.ApiControllers
@@ -60,7 +61,7 @@ namespace Web.ApiControllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult<EmployeeDto>> Login(LoginDto loginDto)
+        public async Task<ActionResult<ResultModel>> Login(LoginDto loginDto)
         {
             try
             {
@@ -73,15 +74,30 @@ namespace Web.ApiControllers
                 if (result.Succeeded)
                 {
                     IList<string> roles = await _userManager.GetRolesAsync(user);
-                    return CreateEmployeeObject(user, roles.Count > 0 ? roles[0] : string.Empty);
-                }
 
+                    EmployeeDto dto = CreateEmployeeObject(user, roles.Count > 0 ? roles[0] : string.Empty);
+
+                    SetSessionString("current_user_token", dto.Token);
+                    SetSessionString("current_user_email", loginDto.Email);
+                    SetSessionString("current_user_role", dto.Role);
+                    SetSessionString("current_user_name", dto.Name);
+                    SetSessionString("current_user_id", dto.Id);
+
+                    ResultModel resultModel = new ResultModel()
+                    {
+                        IsSuccess = true,
+                        Result = dto,
+                        ErrorMessage = ""
+                    };
+
+                    return resultModel;
+                }
                 return Unauthorized();
             }
             catch (System.Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
@@ -348,6 +364,11 @@ namespace Web.ApiControllers
             var empDto = await _empRepository.GetAllActiveEmployee();
             var filterEmp = empDto.Where(p => p.Role == "Drawing" || p.Role == "Engineering").Select(p => p).ToList();
             return filterEmp;
+        }
+
+        private void SetSessionString(string name, string property)
+        {
+            HttpContext.Session.SetString(name, property);
         }
     }
 }

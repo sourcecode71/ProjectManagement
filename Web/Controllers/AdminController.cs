@@ -34,7 +34,7 @@ namespace Web.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Employee", "Index");
+                    return RedirectToAction("Index", "Employee");
                 }
 
             }

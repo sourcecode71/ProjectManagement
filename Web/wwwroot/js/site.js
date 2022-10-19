@@ -1,8 +1,8 @@
-﻿var Site = {
+﻿var SiteV1 = {
 
 }
 
-Site.login = function () {
+SiteV1.Userlogin = function () {
 
     var email = $("#loginEmail").val();
     var password = $("#loginPassword").val();
@@ -13,9 +13,13 @@ Site.login = function () {
     };
 
     $.ajax({
-        url: '/Home/Login',
+        url: '/api/Employee/login',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         type: 'POST',
-        data: loginUser,
+        data: JSON.stringify(loginUser),
         success: function (response) {
             if (response.isSuccess) {
                 if (response.result.role == "Admin") {

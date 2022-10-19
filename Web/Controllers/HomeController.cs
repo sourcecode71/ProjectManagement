@@ -15,7 +15,6 @@ namespace Web.Controllers
         private readonly ApiService _apiService;
         private readonly ConverterService<string> _converterService;
 
-
         public HomeController(ILogger<HomeController> logger, ApiService apiService, ConverterService<string> converterService)
         {
             _logger = logger;
