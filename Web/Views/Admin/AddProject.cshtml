@@ -190,7 +190,7 @@
                         </div>
                         <div class="row mt-4 mb-3 ml-2">
 
-                             <button type="button" style="width:140px"  v-on:click="SubmitProject()" class="btn btn-outline-primary" >  Submit  </button>
+                             <button type="button" style="width:140px"  v-on:click="SubmitProject()" class="btn btn-outline-primary" > {{operationType}}    </button>
                         </div>
                     </form>
                
@@ -233,8 +233,18 @@
                                     <td>{{allP.week}}</td>
                                     <td> 
                                         <button type="button" v-on:click="showWorkOrderByProject(allP)" class="btn btn-outline-info btn-sm">
-                                            <i class="metismenu-icon pe-7s-network"></i> Work Order
-                                        </button>  </td>
+                                            <i class="metismenu-icon pe-7s-network"></i> 
+                                        </button>
+                                         @if (currentRole == "Admin")
+                                        {
+                                            <button type="button" v-on:click="EditWorkOrderByProject(allP)" class="btn btn-outline-info btn-sm">
+                                            <i class="metismenu-icon pe-7s-pen"></i> 
+                                            </button>
+                                        }
+                                        
+                                   </td>
+
+                                  
                                 </tr>
         
                                 </tbody>

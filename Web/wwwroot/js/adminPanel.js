@@ -1,5 +1,5 @@
 ﻿var AdminPanel = {
-    href: "http://ec2-3-144-165-25.us-east-2.compute.amazonaws.com/api/Project/get-excel-report?projectStatus="
+    href: "http://plexoprojects.com/api/Project/get-excel-report?projectStatus="
 }
 
 AdminPanel.addNewEmployee = function () {

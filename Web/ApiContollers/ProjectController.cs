@@ -34,6 +34,13 @@ namespace Web.ApiControllers
             return Ok(Status);
         }
 
+        [HttpPost("update-project")]
+        public async Task<IActionResult> UpdateProject([FromBody] ProjectDto dto)
+        {
+            bool Status = await _project.UpdateProject(dto);
+            return Ok(Status);
+        }
+
         [HttpGet("get-excel-report")]
         public FileResult ExportExcel(int projectType)
         {

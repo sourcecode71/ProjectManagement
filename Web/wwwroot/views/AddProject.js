@@ -33,7 +33,8 @@
         proposal: '',
         proposalId: '0',
         hideNow: false,
-        seen: false
+        seen: false,
+        operationType: "Submit"
 
     },
     methods: {
@@ -50,10 +51,12 @@
 
                 const config = { headers: { 'Content-Type': 'application/json' } };
                 var base_url = window.location.origin;
-                const clientURL = base_url + "/api/project/create-new-project";
+                const Operaation = this.operationType == "Submit" ? "/api/project/create-new-project" : "/api/project/update-project";
+                const clientURL = base_url + Operaation ;
 
 
                 let project = {
+                    id: this.id,
                     proposalId: this.proposalId,
                     name: this.name,
                     companyId: this.companyId,
@@ -71,6 +74,9 @@
                             showConfirmButton: false,
                             timer: 1500
                         })
+
+                        this.seen = this.operationType == "Submit";
+                        this.operationType = "Submit";
                         this.clearAll();
                         this.LoadAllActiveProjects();
                     }).catch(errors => {
@@ -111,6 +117,9 @@
 
             axios.get(clientURL, config).then(
                 (result) => {
+
+                    console.log("  result.data ", result.data);
+
                     this.companies = result.data;
                 },
                 (error) => {
@@ -138,15 +147,9 @@
             const clientURL = base_url + "/api/project/load-active-projects";
 
             axios.get(clientURL, config).then(result => {
-
-                console.log(" project -- ", result);
-
+               // console.log(" project -- ", result);
                 $("#allProject").dataTable().fnDestroy();
-
-                setTimeout(() => {
-                    this.allProjects = result.data;
-
-                }, 100);
+                this.allProjects = result.data;
 
                 setTimeout(() => {
                     $("#allProject").DataTable({
@@ -160,10 +163,10 @@
                             { "width": "35%" },
                             { "width": "10%" },
                             { "width": "10%" },
-                            { "width": "15%" },
+                            { "width": "15%" }
                         ]
                     });
-                }, 100);
+                }, 1000);
               
             }, error => {
                 console.error(error);
@@ -187,6 +190,16 @@
 
 
 
+        },
+
+        EditWorkOrderByProject: function (prj) {
+            this.seen = true;
+            this.name = prj.name;
+            this.pweek = prj.week;
+            this.workorderDesc = prj.description;
+            this.companyId = prj.companyId.toLowerCase();
+            this.id = prj.id;
+            this.operationType = "Update";
         },
 
         ComeFromProposal: function () {
@@ -295,7 +308,9 @@
             }
             return decodeURI(results[1]) || 0;
 
-        }
+        },
+
+
     },
 
    

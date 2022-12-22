@@ -358,6 +358,7 @@ namespace PMG.Data.Repository.Projects
                                           Year = prj.Year,
                                           Description = prj.Description,
                                           CompanyName = cts.Name,
+                                          CompanyId = prj.CompanyId.ToString(),
                                           Week = prj.Week,
                                           StartDateStr = prj.StartDate.ToString("MM/dd/yyyy"),
                                           DeliveryDateStr = prj.DeliveryDate.ToString("MM/dd/yyyy"),
@@ -465,6 +466,31 @@ namespace PMG.Data.Repository.Projects
             }
         }
 
+        public async Task<bool> UpdateProject(ProjectDto dto)
+        {
+            try
+            {
+                Project project = _context.Projects.FirstOrDefault(p=>p.Id == dto.Id);
+
+                if(project != null)
+                {
+                    project.Description = dto.Description;
+                    project.Name = dto.Name;
+                    project.Week = dto.Week;
+                    project.CompanyId = new Guid(dto.CompanyId);
+                }
+
+                int State = _context.SaveChanges();
+
+                return State == 1;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         private async Task<bool> CreateProjectBudget(ProjectDto dto, string cnPid, string projectNo)
         {
             try
@@ -544,6 +570,6 @@ namespace PMG.Data.Repository.Projects
             return PmBudgetNo;
         }
 
-
+        
     }
 }
